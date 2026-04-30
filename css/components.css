@@ -562,6 +562,7 @@
 
 .cases-hdr {
   margin-bottom: 54px;
+  text-align: center;
 }
 
 .cases-hdr h2 {
@@ -587,9 +588,10 @@
 
 .cases-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
   max-width: 1100px;
+  margin: 0 auto;
 }
 
 .case {
@@ -1276,11 +1278,23 @@
   background: var(--mm-dark);
   color: #fff;
   padding: var(--sp-xxl) 0;
+  text-align: center;
 }
 
 .page-hero .section-eyebrow { color: var(--mm-orange-t2); }
 .page-hero h1 { max-width: 800px; }
 .page-hero p { max-width: 560px; font-size: 18px; opacity: 0.75; margin-bottom: var(--sp-lg); }
+
+.cta-strip {
+  padding: var(--sp-xxl) 54px;
+  background: var(--mm-orange);
+  text-align: center;
+}
+
+.cta-strip h2 {
+  color: var(--mm-dark);
+  margin-bottom: var(--sp-md);
+}
 
 .placeholder-section { padding: var(--sp-xxl) 0; }
 .placeholder-block {

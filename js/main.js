@@ -55,6 +55,22 @@ window.addEventListener('load', function() {
 });
 
 // ---------------------------------------------------------------------------
+// Step card entrance animation
+// ---------------------------------------------------------------------------
+var stepCards = document.querySelectorAll('.step-card');
+if (stepCards.length && 'IntersectionObserver' in window) {
+  var stepObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        stepObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  stepCards.forEach(function(card) { stepObserver.observe(card); });
+}
+
+// ---------------------------------------------------------------------------
 // FAQ accordion
 // ---------------------------------------------------------------------------
 document.querySelectorAll('.faq-q').forEach(function(btn) {

@@ -140,6 +140,21 @@ img {
 .reveal-d3 { transition-delay: 0.3s; }
 .reveal-d4 { transition-delay: 0.4s; }
 
+/* How It Works — staggered entrance */
+.step-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.step-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.step-card:nth-child(1) { transition-delay: 0s; }
+.step-card:nth-child(2) { transition-delay: 0.12s; }
+.step-card:nth-child(3) { transition-delay: 0.24s; }
+.step-card:nth-child(4) { transition-delay: 0.36s; }
+
 /* ==========================================================================
    Animations
    ========================================================================== */
