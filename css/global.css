@@ -2,6 +2,41 @@
    Mechanic Marketing — Global CSS
    ========================================================================== */
 
+/* ==========================================================================
+   Font Faces — TT Commons Pro
+   ========================================================================== */
+
+@font-face {
+  font-family: 'TT Commons Pro';
+  src: url('/assets/fonts/TT_Commons_Pro_Regular.woff2') format('woff2'),
+       url('/assets/fonts/TT_Commons_Pro_Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Commons Pro';
+  src: url('/assets/fonts/TT_Commons_Pro_Bold.woff2') format('woff2'),
+       url('/assets/fonts/TT_Commons_Pro_Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Commons Pro';
+  src: url('/assets/fonts/TT_Commons_Pro_ExtraBlack.woff2') format('woff2'),
+       url('/assets/fonts/TT_Commons_Pro_ExtraBlack.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Design Tokens
+   ========================================================================== */
+
 :root {
   --mm-orange: #FF3D02;
   --mm-warm-white: #F0F0EC;
@@ -13,8 +48,8 @@
   --mm-orange-t3: #FFAC98;
   --mm-orange-t4: #FFD1C6;
 
-  --font-display: 'TT Commons Condensed', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'TT Commons', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'TT Commons Pro', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'TT Commons Pro', 'Helvetica Neue', Arial, sans-serif;
 
   --sp-xxs: 7px;
   --sp-xs: 11px;
@@ -25,18 +60,28 @@
   --sp-xxl: 81px;
 }
 
-/* Reset */
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--mm-warm-white);
   color: var(--mm-dark);
   font-family: var(--font-body);
+  font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -48,9 +93,9 @@ h1, h2, h3, h4 {
   margin: 0 0 var(--sp-md);
 }
 
-h1 { font-size: clamp(56px, 8vw, 120px); }
-h2 { font-size: clamp(36px, 5vw, 72px); }
-h3 { font-size: clamp(24px, 3vw, 40px); }
+h1 { font-size: clamp(56px, 8vw, 81px); letter-spacing: -0.03em; }
+h2 { font-size: clamp(36px, 5vw, 54px); letter-spacing: -0.03em; }
+h3 { font-size: clamp(20px, 3vw, 24px); }
 h4 { font-size: 20px; line-height: 1.1; }
 
 p {
@@ -79,215 +124,213 @@ img {
 }
 
 /* ==========================================================================
-   Header
+   Scroll Reveal
    ========================================================================== */
 
-.site-header {
-  background: var(--mm-warm-white);
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes heroZoom {
+  from { transform: scale(1.08) translateY(-1%); }
+  to   { transform: scale(1.12) translateY(1%); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Nav
+   ========================================================================== */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 54px;
+  background: var(--mm-dark);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-.site-header .container {
+.nav-logo {
   display: flex;
   align-items: center;
-  gap: var(--sp-md);
-  height: 64px;
-}
-
-.logo {
+  gap: 11px;
   text-decoration: none;
-  flex-shrink: 0;
 }
 
-.logo-text {
+.nav-mm {
   font-family: var(--font-display);
-  font-size: 28px;
   font-weight: 900;
-  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--mm-orange);
   letter-spacing: -0.02em;
-  color: var(--mm-dark);
-  line-height: 1;
 }
 
-.site-nav {
-  flex: 1;
+.nav-wm {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--mm-warm-white);
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  font-variant: small-caps;
 }
 
-.site-nav ul {
+.nav-links {
   display: flex;
-  gap: var(--sp-md);
+  gap: 36px;
   align-items: center;
 }
 
-.site-nav a {
+.nav-links a {
+  color: var(--mm-warm-white);
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--mm-dark);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.01em;
   text-decoration: none;
-  letter-spacing: 0.01em;
-  transition: color 0.15s ease;
+  transition: color 0.2s;
 }
 
-.site-nav a:hover {
+.nav-links a:hover {
   color: var(--mm-orange);
   text-decoration: none;
 }
 
 .nav-cta {
-  margin-left: auto;
-  flex-shrink: 0;
+  background: var(--mm-orange) !important;
+  color: var(--mm-dark) !important;
+  padding: 11px 24px;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  transition: background 0.2s;
+  text-decoration: none !important;
 }
 
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: var(--mm-dark);
-  padding: 4px;
-  margin-left: auto;
+.nav-cta:hover {
+  background: var(--mm-orange-t1) !important;
+  text-decoration: none !important;
 }
 
 /* ==========================================================================
    Footer
    ========================================================================== */
 
-.site-footer {
+.footer {
   background: var(--mm-dark);
-  color: #fff;
+  padding: var(--sp-xxl) 54px 36px;
 }
 
-.site-footer .container {
-  padding-top: var(--sp-xxl);
-  padding-bottom: var(--sp-xl);
-}
-
-.footer-top {
+.ft-top {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-xxl);
-  padding-bottom: var(--sp-xl);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: var(--sp-lg);
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 54px;
+  margin-bottom: 54px;
 }
 
-.footer-brand .logo-text {
-  color: #fff;
+.ft-brand .nav-mm {
+  font-size: 36px;
   display: block;
-  margin-bottom: var(--sp-sm);
+  margin-bottom: 16px;
 }
 
-.footer-brand p {
-  font-size: 14px;
-  opacity: 0.6;
-  line-height: 1.6;
-  max-width: 320px;
+.ft-brand p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(240,240,236,0.4);
+  max-width: 300px;
   margin: 0;
 }
 
-.footer-links {
-  display: flex;
-  gap: var(--sp-xxl);
-}
-
-.footer-col h4 {
-  font-size: 13px;
+.ft-col h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--mm-orange);
-  margin-bottom: var(--sp-sm);
+  margin-bottom: 24px;
   line-height: 1.2;
 }
 
-.footer-col ul {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-xs);
-}
-
-.footer-col a {
-  font-size: 14px;
-  color: rgba(255,255,255,0.65);
+.ft-col a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 150%;
+  color: rgba(240,240,236,0.5);
+  margin-bottom: 11px;
+  transition: color 0.2s;
   text-decoration: none;
-  transition: color 0.15s ease;
 }
 
-.footer-col a:hover {
+.ft-col a:hover {
+  color: var(--mm-warm-white);
+  text-decoration: none;
+}
+
+.ft-bot {
+  border-top: 1px solid rgba(240,240,236,0.08);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ft-copy {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: rgba(240,240,236,0.3);
+}
+
+.ft-soc {
+  display: flex;
+  gap: 16px;
+}
+
+.ft-soc a {
+  color: rgba(240,240,236,0.3);
+  transition: color 0.2s;
+  text-decoration: none;
+  display: block;
+}
+
+.ft-soc a:hover {
   color: var(--mm-orange);
   text-decoration: none;
 }
 
-.footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--sp-md);
-}
-
-.footer-bottom p {
-  font-size: 13px;
-  opacity: 0.45;
-  margin: 0;
-}
-
-.footer-tagline {
-  font-style: italic;
-  opacity: 0.4 !important;
-  font-size: 12px !important;
+.ft-soc svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* ==========================================================================
-   Mobile Nav
+   Responsive — Global
    ========================================================================== */
 
-@media (max-width: 767px) {
-  .site-nav {
-    display: none;
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    background: var(--mm-warm-white);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    padding: var(--sp-sm) var(--sp-md);
-    z-index: 99;
-  }
+@media (max-width: 768px) {
+  .nav { padding: 11px 24px; }
+  .nav-links a:not(.nav-cta) { display: none; }
 
-  .site-nav.is-open {
-    display: block;
-  }
-
-  .site-nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--sp-sm);
-  }
-
-  .nav-toggle {
-    display: block;
-  }
-
-  .nav-cta {
-    display: none;
-  }
-
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: var(--sp-xl);
-  }
-
-  .footer-links {
-    flex-direction: column;
-    gap: var(--sp-lg);
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--sp-xs);
-  }
+  .ft-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .footer { padding: 54px 24px 24px; }
+  .ft-bot { flex-direction: column; align-items: flex-start; gap: var(--sp-sm); }
 }
