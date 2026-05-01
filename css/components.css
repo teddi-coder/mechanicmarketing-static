@@ -1332,15 +1332,23 @@
    ========================================================================== */
 
 .page-hero {
+  display: block;
   background: var(--mm-dark);
   color: #fff;
-  padding: var(--sp-xxl) 0;
+  padding: 100px 40px 80px;
   text-align: center;
 }
 
-.page-hero .section-eyebrow { color: var(--mm-orange-t2); }
-.page-hero h1 { max-width: 800px; }
-.page-hero p { max-width: 560px; font-size: 18px; opacity: 0.75; margin-bottom: var(--sp-lg); }
+.page-hero .container {
+  text-align: center;
+}
+
+.page-hero .section-eyebrow,
+.page-hero .section-label { color: var(--mm-orange-t2); margin-left: auto; margin-right: auto; }
+.page-hero h1 { max-width: 800px; margin: 0 auto 16px; }
+.page-hero h2 { max-width: 700px; margin: 0 auto 16px; }
+.page-hero p { max-width: 640px; font-size: 18px; opacity: 0.75; margin: 0 auto var(--sp-lg); }
+.page-hero .btn { display: inline-block; }
 
 .cta-strip {
   padding: var(--sp-xxl) 54px;
