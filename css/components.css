@@ -873,6 +873,11 @@
   justify-content: space-between;
   align-items: center;
   gap: 24px;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border: none;
+  color: inherit;
 }
 
 .faq-q::after {
@@ -896,6 +901,10 @@
   padding-bottom: 24px;
   display: none;
   margin: 0;
+  text-align: left;
+}
+.faq-a p {
+  text-align: left;
 }
 
 .faq-i.open .faq-a {

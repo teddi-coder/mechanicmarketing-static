@@ -785,6 +785,14 @@ body {
   color: var(--b);
 }
 
+/* Wordmark on cream (sub-page) nav background */
+.site-header .nav-wm {
+  color: var(--b);
+}
+.site-header .nav-mm {
+  color: var(--o);
+}
+
 /* ==========================================================================
    Section Label Pills (Change 3)
    ========================================================================== */
