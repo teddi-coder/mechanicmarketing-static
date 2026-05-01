@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Mechanic Marketing</title>
-  <meta name="description" content="Get in touch with Mechanic Marketing. Book a free strategy call for your automotive workshop.">
+  <meta name="description" content="Book a free consultation and we'll walk you through exactly how we can get more cars into your workshop.">
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/components.css">
 </head>
@@ -27,63 +27,105 @@
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="page-hero">
     <div class="container">
       <span class="section-eyebrow">Contact</span>
-      <h1>LET'S TALK ABOUT YOUR WORKSHOP</h1>
-      <p>Book a free 20-minute strategy call. No sales pitch — just a straight conversation about what marketing will actually work for your business.</p>
+      <h1>Need more cars in your workshop?</h1>
+      <p>Fill in your details, and we'll show you how to rev up your marketing. No obligation, no lock-in.</p>
     </div>
   </section>
 
+  <!-- CONTACT SECTION -->
   <section class="contact-section">
     <div class="container">
       <div class="contact-grid">
+
+        <!-- LEFT: TRUST SIGNALS -->
         <div>
-          <form class="contact-form" id="contact-form" novalidate>
+          <h3 style="font-size: 28px; margin-bottom: var(--sp-md);">Let's get your bays full</h3>
+          <p style="font-size: 15px; opacity: 0.75; line-height: 1.7; margin-bottom: var(--sp-md);">Book a free consultation and we'll walk you through exactly how we can get more cars into your workshop. No jargon, no hard sell.</p>
+          <ul style="list-style: none; padding: 0; margin: 0 0 var(--sp-xl) 0; display: flex; flex-direction: column; gap: 10px;">
+            <li style="font-size: 15px; opacity: 0.8;">&#10003; Free consultation — no obligation</li>
+            <li style="font-size: 15px; opacity: 0.8;">&#10003; No lock-in contracts, ever</li>
+            <li style="font-size: 15px; opacity: 0.8;">&#10003; Workshops across Australia</li>
+            <li style="font-size: 15px; opacity: 0.8;">&#10003; Full ownership of everything we build</li>
+          </ul>
+          <p style="font-size: 15px; opacity: 0.75; margin-bottom: var(--sp-sm);">Prefer to book a call directly?</p>
+          <a href="__BOOKING_URL__" class="btn btn-secondary" style="display: inline-block; margin-bottom: var(--sp-lg);">Book a call</a>
+          <p style="font-size: 14px; opacity: 0.6;">Or email us at <a href="mailto:hello@mechanicmarketing.co" style="color: inherit;">hello@mechanicmarketing.co</a></p>
+        </div>
+
+        <!-- RIGHT: FORM -->
+        <div>
+          <form class="contact-form" id="contact-form" action="__CONTACT_FORM_ENDPOINT__" method="POST" novalidate>
             <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="Your full name" required>
+              <label for="full_name">Full Name <span aria-hidden="true">*</span></label>
+              <input type="text" id="full_name" name="full_name" placeholder="Your full name" required>
             </div>
             <div class="form-group">
-              <label for="business_name">Business Name</label>
-              <input type="text" id="business_name" name="business_name" placeholder="Your workshop name" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Email <span aria-hidden="true">*</span></label>
               <input type="email" id="email" name="email" placeholder="your@email.com" required>
             </div>
             <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" placeholder="Tell us about your workshop and what you're looking for..." required></textarea>
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" placeholder="Your phone number">
             </div>
             <div class="form-group">
-              <label for="how_heard">How did you hear about us?</label>
-              <select id="how_heard" name="how_heard">
+              <label for="workshop_name">Workshop Name</label>
+              <input type="text" id="workshop_name" name="workshop_name" placeholder="Your workshop name">
+            </div>
+            <div class="form-group">
+              <label for="website_url">Website URL</label>
+              <input type="url" id="website_url" name="website_url" placeholder="https://yourworkshop.com.au">
+            </div>
+            <div class="form-group">
+              <label for="monthly_revenue">Monthly Revenue</label>
+              <select id="monthly_revenue" name="monthly_revenue">
                 <option value="">Select an option...</option>
-                <option value="google_search">Google Search</option>
-                <option value="google_ads">Google Ads</option>
-                <option value="facebook">Facebook</option>
-                <option value="instagram">Instagram</option>
-                <option value="word_of_mouth">Word of Mouth</option>
-                <option value="podcast">Podcast</option>
-                <option value="other">Other</option>
+                <option value="under_10k">Under $10k</option>
+                <option value="10k_25k">$10k&ndash;$25k</option>
+                <option value="25k_50k">$25k&ndash;$50k</option>
+                <option value="50k_plus">$50k+</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your workshop and what you're looking for..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Get in touch</button>
           </form>
         </div>
-        <div>
-          <h3 style="font-size: 28px; margin-bottom: var(--sp-md);">WHAT TO EXPECT</h3>
-          <p style="font-size: 15px; opacity: 0.7; line-height: 1.7;">After you send your message, one of the team will reach out within 1 business day to book a 20-minute call at a time that suits you.</p>
-          <p style="font-size: 15px; opacity: 0.7; line-height: 1.7;">On the call we'll ask about your workshop, your goals, and your current marketing. No obligation, no pressure.</p>
-          <div style="margin-top: var(--sp-xl); padding: var(--sp-lg); background: var(--mm-dark); border-radius: 8px; color: #fff;">
-            <span class="section-eyebrow" style="color: var(--mm-orange-t2);">Direct Contact</span>
-            <p style="margin: 0; font-size: 15px; opacity: 0.8;">hello@mechanicmarketing.co</p>
-          </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="background: #fff;">
+    <div class="container">
+      <span class="section-eyebrow">FAQ</span>
+      <h2>Common questions</h2>
+      <div class="faq-list" style="margin-top: var(--sp-xl);">
+        <div class="faq-i open">
+          <div class="faq-q">How can digital marketing help my mechanic shop get more customers?</div>
+          <div class="faq-a">Digital marketing helps your mechanic shop by making sure people can find you online. Most customers search for mechanics on Google before deciding where to take their car. If your shop shows up in local searches and has good reviews, you're more likely to get picked. Having a clean, easy-to-use website and running Google Ads targeted to your area will bring in new customers.</div>
+        </div>
+        <div class="faq-i">
+          <div class="faq-q">I'm not tech-savvy. Can I still use digital marketing?</div>
+          <div class="faq-a">Absolutely. You don't need to be tech-savvy to benefit from digital marketing. That's exactly why we exist — we handle everything for you. You focus on fixing cars, we focus on getting them through the door.</div>
+        </div>
+        <div class="faq-i">
+          <div class="faq-q">Is digital marketing worth it for a small mechanic shop?</div>
+          <div class="faq-a">Yes. Traditional ads like flyers don't target customers as well as digital marketing does. With Google Ads, you can make sure your shop shows up when someone nearby searches for "mechanic near me." It might take a bit of time, but digital marketing can steadily bring in more business — especially when combined with quality service.</div>
+        </div>
+        <div class="faq-i">
+          <div class="faq-q">How do I get my shop to show up higher on Google?</div>
+          <div class="faq-a">Start by making sure your website is optimised with the right keywords — terms like "mechanic near me" or "car repair in [your city]." Set up your Google Business Profile, which helps you show up in local searches and on Google Maps. Encourage customers to leave reviews, and regularly update your site with fresh content.</div>
+        </div>
+        <div class="faq-i">
+          <div class="faq-q">What's the best way to target local customers?</div>
+          <div class="faq-a">Focus on Google Business Profile and local SEO for your suburb and surrounding areas. Google Ads with geo-targeting ensures your ads only show to nearby drivers. Facebook Ads with location radius targeting can also reach locals who haven't searched yet.</div>
         </div>
       </div>
     </div>
@@ -94,7 +136,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <span class="logo-text">MM</span>
-          <p>Specialist automotive digital marketing. Google Ads, SEO, and local marketing exclusively for mechanics and auto repair shops.</p>
+          <p>Specialist digital marketing for Australian mechanic shops and auto repair workshops.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
@@ -107,7 +149,17 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Company</h4>
+            <h4>Industries</h4>
+            <ul>
+              <li><a href="/industries/diesel.html">Diesel</a></li>
+              <li><a href="/industries/european.html">European</a></li>
+              <li><a href="/industries/4x4.html">4x4</a></li>
+              <li><a href="/industries/american-trucks.html">American Trucks</a></li>
+              <li><a href="/industries/mobile-mechanic.html">Mobile Mechanic</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
             <ul>
               <li><a href="/case-studies/">Case Studies</a></li>
               <li><a href="/pricing.html">Pricing</a></li>
@@ -119,7 +171,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Mechanic Marketing</p>
+        <p>&copy; 2026 Mechanic Marketing. All rights reserved.</p>
         <p class="footer-tagline">Built for the pit lane.</p>
       </div>
     </div>
