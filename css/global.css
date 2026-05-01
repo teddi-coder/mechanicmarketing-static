@@ -1093,3 +1093,113 @@ a.blog-card:hover {
   .blog-post-body { grid-template-columns: 1fr; }
   .blog-cta-box { position: static; margin-top: 40px; }
 }
+
+/* ==========================================================================
+   How We Do It — Service / Industry Pages
+   ========================================================================== */
+
+.how-we-do-it {
+  background: var(--b);
+  padding: 96px 0;
+}
+.how-we-do-it-heading {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 44px);
+  color: var(--w);
+  letter-spacing: -0.03em;
+  margin-bottom: 48px;
+}
+.how-we-do-it-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.hwdi-step {
+  position: relative;
+}
+.hwdi-step-num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 72px;
+  color: rgba(255,255,255,0.06);
+  line-height: 1;
+  position: absolute;
+  top: -16px;
+  left: 0;
+}
+.hwdi-step-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--w);
+  margin-bottom: 10px;
+  padding-top: 40px;
+}
+.hwdi-step-desc {
+  font-size: 14px;
+  color: rgba(240,240,236,0.55);
+  line-height: 1.6;
+}
+@media (max-width: 768px) {
+  .how-we-do-it-steps { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Mini Stat Section — Service / Industry Pages
+   ========================================================================== */
+
+.mini-stat-section {
+  background: var(--o);
+  padding: 72px 0;
+}
+.mini-stat-inner {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+.mini-stat-number {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(64px, 10vw, 120px);
+  color: #fff;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.mini-stat-desc {
+  font-size: 18px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 16px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+.mini-stat-link {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid rgba(255,255,255,0.4);
+  padding-bottom: 2px;
+}
+@media (max-width: 768px) {
+  .mini-stat-inner { flex-direction: column; gap: 16px; }
+}
+
+/* ==========================================================================
+   FAQ Section — Service / Industry Pages
+   ========================================================================== */
+
+.faq-section {
+  background: var(--w);
+  padding: 96px 0;
+}
+.faq-section h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 44px);
+  color: var(--b);
+  letter-spacing: -0.03em;
+  margin-bottom: 40px;
+}
