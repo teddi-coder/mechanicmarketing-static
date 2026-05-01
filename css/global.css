@@ -184,6 +184,114 @@ img {
   z-index: 100;
 }
 
+/* Site-header nav (case study pages + sub-pages) */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--b);
+  height: 64px;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 40px;
+}
+
+.site-header + * {
+  padding-top: 64px;
+}
+
+.logo,
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--w);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav ul a {
+  color: rgba(240,240,236,0.75);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.site-nav ul a:hover {
+  color: var(--w);
+  text-decoration: none;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--w);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+  .site-header .site-nav ul {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--b);
+    padding: 16px 24px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .site-header .site-nav ul.is-open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: block;
+  }
+  .site-header .nav-cta.nav-cta-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
 .nav-logo {
   display: flex;
   align-items: center;
