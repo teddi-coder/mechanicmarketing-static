@@ -475,7 +475,7 @@ img {
 .hero-stat-badge {
   position: absolute;
   bottom: 24px;
-  left: -20px;
+  left: 16px;
   background: var(--b);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 8px;
@@ -485,6 +485,13 @@ img {
   gap: 2px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   z-index: 2;
+  min-width: 140px;
+}
+
+.hero-img, .hero-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
 }
 .hero-stat-number {
   font-size: 28px;
@@ -544,6 +551,142 @@ img {
 }
 
 /* ==========================================================================
+   Site Footer (new .site-footer structure)
+   ========================================================================== */
+
+.site-footer {
+  background: var(--b);
+  padding: 64px 0 40px;
+  color: var(--w);
+}
+
+.footer-top {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.footer-brand p {
+  color: rgba(240,240,236,0.55);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.footer-links {
+  display: contents;
+}
+
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w);
+  margin-bottom: 16px;
+}
+
+.footer-col a {
+  display: block;
+  color: rgba(240,240,236,0.55);
+  text-decoration: none;
+  font-size: 13px;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--o);
+}
+
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding: 24px 40px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: rgba(240,240,236,0.35);
+  font-size: 12px;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-brand .logo-text {
+  color: var(--w);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .footer-links {
+    display: contents;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Pricing Comparison Table Layout
+   ========================================================================== */
+
+.comparison-table-wrapper {
+  max-width: 860px;
+  margin: 48px auto 0;
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(28,28,26,0.08);
+}
+
+.comparison-table th {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+  color: rgba(28,28,26,0.65);
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .pricing-cards { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
    Pricing Comparison Table Accent
    ========================================================================== */
 
@@ -577,7 +720,7 @@ img {
   left: 0;
   right: 0;
   z-index: 101;
-  height: 32px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -590,25 +733,48 @@ img {
   text-transform: uppercase;
 }
 
-.site-nav, .site-header {
-  top: 32px; /* sits below the announce bar */
-}
-
 body {
-  padding-top: 96px; /* 32px announce bar + 64px nav */
+  padding-top: 88px; /* 24px announce bar + 64px nav */
 }
 
 /* ==========================================================================
    Nav: Cream Background (Change 2)
    ========================================================================== */
 
-.site-nav, .site-header {
+.site-header, .site-nav {
   background: var(--w);
   border-bottom: 1px solid rgba(28,28,26,0.08);
+  position: fixed;
+  top: 24px; /* below announce bar */
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 64px;
 }
 
+.nav-links, .site-nav ul, .site-nav nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-links li, .site-nav ul li {
+  display: list-item;
+}
+
+/* CRITICAL: dark text on cream background */
 .nav-links a, .site-nav ul a, .site-nav nav a {
   color: rgba(28,28,26,0.65);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .nav-links a:hover, .site-nav ul a:hover {
