@@ -990,3 +990,106 @@ body {
   .footer { padding: 54px 24px 24px; }
   .ft-bot { flex-direction: column; align-items: flex-start; gap: var(--sp-sm); }
 }
+
+/* ==========================================================================
+   Blog Post Pages
+   ========================================================================== */
+
+.blog-post-hero {
+  background: var(--b);
+  padding: 80px 0 48px;
+}
+.blog-post-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 56px);
+  color: var(--w);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 800px;
+  margin-bottom: 16px;
+}
+.blog-post-meta {
+  color: rgba(240,240,236,0.55);
+  font-size: 14px;
+}
+.blog-post-image {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.blog-post-image img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: -40px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+}
+.blog-post-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 64px;
+  padding-top: 64px;
+  padding-bottom: 96px;
+  align-items: start;
+}
+.blog-post-content p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(28,28,26,0.8);
+  margin-bottom: 24px;
+}
+.blog-cta-box {
+  background: var(--b);
+  border-radius: 8px;
+  padding: 28px;
+  position: sticky;
+  top: 88px;
+}
+.blog-cta-box h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--w);
+  margin-bottom: 10px;
+}
+.blog-cta-box p {
+  font-size: 13px;
+  color: rgba(240,240,236,0.6);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Blog Index — Card Links
+   ========================================================================== */
+
+a.blog-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+a.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* ==========================================================================
+   Blog Index — Featured Post Hero
+   ========================================================================== */
+
+.blog-featured {
+  background: var(--w);
+  padding: 64px 0;
+}
+.blog-featured h2, .blog-featured-title {
+  color: var(--b);
+}
+.blog-featured p, .blog-featured-excerpt {
+  color: rgba(28,28,26,0.65);
+}
+
+@media (max-width: 768px) {
+  .blog-post-body { grid-template-columns: 1fr; }
+  .blog-cta-box { position: static; margin-top: 40px; }
+}
