@@ -84,7 +84,7 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.65;
   margin: 0;
   padding-top: 88px; /* 24px announce bar + 64px nav */
   -webkit-font-smoothing: antialiased;
@@ -96,7 +96,7 @@ h1, h2, h3, h4 {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.015em;
-  line-height: 0.89;
+  line-height: 1.0;
   margin: 0 0 var(--sp-md);
 }
 
@@ -223,7 +223,7 @@ img {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 11px;
-  color: var(--mm-warm-white);
+  color: var(--b);
   letter-spacing: 0.1em;
   line-height: 1.3;
   text-transform: uppercase;
@@ -493,6 +493,7 @@ img {
   text-decoration: none;
   font-size: 13px;
   margin-bottom: 8px;
+  padding: 2px 0;
   transition: color 0.2s;
 }
 
@@ -1037,7 +1038,7 @@ img {
   margin-bottom: 10px;
 }
 .blog-cta-box p {
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(240,240,236,0.6);
   margin-bottom: 20px;
   line-height: 1.5;
@@ -1162,7 +1163,7 @@ a.blog-card:hover {
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 72px;
-  color: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.1);
   line-height: 1;
   position: absolute;
   top: -16px;
@@ -1264,7 +1265,7 @@ a.blog-card:hover {
 .cs-hub-sub {
   text-align: center;
   font-size: 16px;
-  color: rgba(28,28,26,0.55);
+  color: rgba(28,28,26,0.7);
   max-width: 500px;
   margin: 0 auto 48px;
   padding: 0 24px;
