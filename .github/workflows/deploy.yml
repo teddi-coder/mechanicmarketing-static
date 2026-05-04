@@ -9,14 +9,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.CLOUDWAYS_HOST }}
-          username: ${{ secrets.CLOUDWAYS_USERNAME }}
-          key: ${{ secrets.CLOUDWAYS_SSH_KEY }}
-          script: |
-            git config --global --add safe.directory '*'
-            cd ${{ secrets.CLOUDWAYS_GIT_PATH }}
-            git pull origin main
-            rsync -rlt --no-perms --no-owner --no-group --delete --exclude='.git' ${{ secrets.CLOUDWAYS_GIT_PATH }}/ ${{ secrets.CLOUDWAYS_APP_PATH }}/
+      - uses: actions/checkout@v4
+      - name: Deploy via rsync
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CLOUDWAYS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.CLOUDWAYS_HOST }}" >> ~/.ssh/known_hosts
+          rsync -rlt --omit-dir-times --no-perms --no-owner --no-group --delete \
+            --exclude='.git' \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            ./ "${{ secrets.CLOUDWAYS_USERNAME }}@${{ secrets.CLOUDWAYS_HOST }}:${{ secrets.CLOUDWAYS_APP_PATH }}/"
