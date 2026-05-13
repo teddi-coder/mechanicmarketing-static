@@ -1495,3 +1495,120 @@
 @media (max-width: 1023px) {
   .blog-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ==========================================================================
+   Stats ticker — Guy review
+   ========================================================================== */
+.stats-ticker {
+  overflow: hidden;
+  background: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8e8e6;
+}
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  white-space: nowrap;
+  animation: mm-ticker 25s linear infinite;
+}
+.ticker-track span {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mm-dark);
+}
+.ticker-dot {
+  color: var(--mm-orange) !important;
+  font-weight: 700;
+}
+@keyframes mm-ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   Hero headline reveal animation — Guy review
+   ========================================================================== */
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-headline {
+  animation: heroReveal 0.9s ease forwards;
+}
+
+/* ==========================================================================
+   Hero stats overlay — Guy review
+   ========================================================================== */
+.hero-visual-wrapper { position: relative; display: block; }
+.hero-stats-overlay {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.hero-stats-overlay span {
+  background: rgba(0,0,0,0.78);
+  color: #fff;
+  padding: 0.3rem 0.9rem;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   Scroll-to-top button — Guy review
+   ========================================================================== */
+#scroll-top-btn {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--mm-dark);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  transition: opacity 0.2s;
+}
+#scroll-top-btn:hover { opacity: 0.8; }
+
+/* ==========================================================================
+   Result card enhancements — Guy review
+   ========================================================================== */
+.cases .case {
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding: 0;
+}
+.cases .case-body { padding: 2rem; }
+.cases .case p { max-width: none; }
+
+/* ==========================================================================
+   Testimonial — A/B test: was coloured bg
+   ========================================================================== */
+/* A/B test: was coloured bg */
+.test {
+  background: #fff;
+}
+.test blockquote, .test cite {
+  color: var(--mm-dark);
+}
+
+/* ==========================================================================
+   Footer — Guy review
+   ========================================================================== */
+footer a { color: inherit; }
