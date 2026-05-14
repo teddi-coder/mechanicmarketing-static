@@ -1510,7 +1510,7 @@
   align-items: center;
   gap: 2rem;
   white-space: nowrap;
-  animation: mm-ticker 25s linear infinite;
+  animation: ticker 22s linear infinite;
 }
 .ticker-track span {
   font-family: var(--font-display);
@@ -1524,91 +1524,25 @@
   color: var(--mm-orange) !important;
   font-weight: 700;
 }
-@keyframes mm-ticker {
+@keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* ==========================================================================
-   Hero headline reveal animation — Guy review
-   ========================================================================== */
-@keyframes heroReveal {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.hero-headline {
-  animation: heroReveal 0.9s ease forwards;
-}
+/* ===================================================================
 
 /* ==========================================================================
-   Hero stats overlay — Guy review
+   Team section
    ========================================================================== */
-.hero-visual-wrapper { position: relative; display: block; }
-.hero-stats-overlay {
-  position: absolute;
-  bottom: 1.25rem;
-  left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.team-section { background: #f5f5f5; padding: 80px 54px; }
+.team-section .container { max-width: 760px; margin: 0 auto; }
+.team-member { display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
+.team-photo { width: 200px; height: 200px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.team-member-details { flex: 1; min-width: 260px; }
+.team-member-details h3 { font-family: var(--font-display, 'TT Commons Pro','TT Commons','Helvetica Neue',Arial,sans-serif); font-weight: 700; font-size: 22px; margin-bottom: 8px; color: #1c1c1e; }
+.team-role { font-weight: 700; color: #FF3D02; margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+.team-member-details p { line-height: 1.6; margin-bottom: 12px; color: #1c1c1e; }
+@media (max-width: 640px) {
+  .team-section { padding: 60px 24px; }
+  .team-photo { width: 160px; height: 160px; }
 }
-.hero-stats-overlay span {
-  background: rgba(0,0,0,0.78);
-  color: #fff;
-  padding: 0.3rem 0.9rem;
-  border-radius: 4px;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
-/* ==========================================================================
-   Scroll-to-top button — Guy review
-   ========================================================================== */
-#scroll-top-btn {
-  display: none;
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--mm-dark);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-  transition: opacity 0.2s;
-}
-#scroll-top-btn:hover { opacity: 0.8; }
-
-/* ==========================================================================
-   Result card enhancements — Guy review
-   ========================================================================== */
-.cases .case {
-  border-radius: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  overflow: hidden;
-  padding: 0;
-}
-.cases .case-body { padding: 2rem; }
-.cases .case p { max-width: none; }
-
-/* ==========================================================================
-   Testimonial — A/B test: was coloured bg
-   ========================================================================== */
-/* A/B test: was coloured bg */
-.test {
-  background: #fff;
-}
-.test blockquote, .test cite {
-  color: var(--mm-dark);
-}
-
-/* ==========================================================================
-   Footer — Guy review
-   ========================================================================== */
-footer a { color: inherit; }
