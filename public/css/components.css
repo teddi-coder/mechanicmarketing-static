@@ -271,6 +271,38 @@
 }
 
 /* ==========================================================================
+   Hero car animation (sketched car built piece-by-piece + walking mechanics)
+   ========================================================================== */
+
+.hero-visual-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-car-anim {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-car-anim .mm-be-next { cursor: pointer; }
+.hero-car-anim .mm-be-next:hover { filter: brightness(1.12); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-car-anim animate,
+  .hero-car-anim animateMotion {
+    animation-duration: 0s !important;
+  }
+  .mm-car,
+  .mm-orbit-group {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
    Ticker Bar
    ========================================================================== */
 
