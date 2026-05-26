@@ -146,6 +146,7 @@ img {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  position: relative;
 }
 .step-card.is-visible {
   opacity: 1;
@@ -155,6 +156,22 @@ img {
 .step-card:nth-child(2) { transition-delay: 0.12s; }
 .step-card:nth-child(3) { transition-delay: 0.24s; }
 .step-card:nth-child(4) { transition-delay: 0.36s; }
+
+/* Arrow connectors between process steps — hidden now that steps are individual cards */
+.step-card:not(:last-child)::after {
+  display: none;
+}
+
+/* Step icons — orange brand color, animated */
+.step-icon {
+  display: block;
+  margin: 0 auto 12px;
+  color: var(--o);
+  transition: transform 0.3s ease;
+}
+.step-card.is-visible .step-icon {
+  transform: scale(1.05);
+}
 
 /* ==========================================================================
    Animations
@@ -413,21 +430,23 @@ img {
 
 .step-badge {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-family: var(--font-display);
-  background: rgba(255,61,2,0.12);
-  color: var(--o);
-  padding: 4px 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  background: rgba(255,61,2,0.07);
+  color: var(--mm-orange);
+  border: 1px solid rgba(255,61,2,0.22);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
 }
 
 .section-light .step-badge {
-  background: rgba(0,0,0,0.06);
-  color: rgba(28,28,26,0.45);
+  background: rgba(255,61,2,0.07);
+  color: var(--mm-orange);
+  border: 1px solid rgba(255,61,2,0.22);
 }
 
 /* ==========================================================================
@@ -826,6 +845,16 @@ img {
   background: var(--w);
 }
 
+.pain-section .container {
+  text-align: center;
+  max-width: 1100px;
+}
+
+.pain-section .section-label {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
 .pain-heading {
   font-family: var(--font-display);
   font-weight: 900;
@@ -833,13 +862,15 @@ img {
   color: var(--b);
   letter-spacing: -0.03em;
   max-width: 600px;
-  margin-bottom: 12px;
+  margin: 0 auto 12px;
+  text-align: center;
 }
 
 .pain-subhead {
   color: rgba(28,28,26,0.55);
   font-size: 16px;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .pain-cards {
@@ -883,6 +914,16 @@ img {
 .guarantees-section {
   background: var(--b);
   padding: 96px 0;
+  text-align: center;
+}
+
+.guarantees-section .container {
+  max-width: 1100px;
+}
+
+.guarantees-section .section-label {
+  display: inline-block;
+  margin-bottom: 16px;
 }
 
 .guarantees-heading {
@@ -892,6 +933,7 @@ img {
   color: var(--w);
   letter-spacing: -0.03em;
   margin-bottom: 48px;
+  text-align: center;
 }
 
 .guarantee-cards {
@@ -916,17 +958,23 @@ img {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 16px;
-  color: var(--w);
+  color: #fff;
   letter-spacing: -0.01em;
   margin-bottom: 10px;
   line-height: 1.3;
+  text-align: left;
 }
 
 .guarantee-card p {
   font-size: 13px;
-  color: rgba(240,240,236,0.55);
+  color: rgba(240,240,236,0.85);
   line-height: 1.6;
   margin: 0;
+  text-align: left;
+}
+
+.guarantee-icon {
+  text-align: left;
 }
 
 @media (max-width: 768px) {
