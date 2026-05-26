@@ -220,13 +220,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <!-- Seg 8: front wheel (wire spokes) — center y=310 so bottom touches ground at y=370 -->
           <g opacity="0">
             <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2182;0.2455;1" dur="11s" repeatCount="1" fill="freeze" data-replay="1"/>
-            <use href="#wire-wheel" x="170" y="310"/>
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="0 170 310" to="360 170 310" dur="3.5s" repeatCount="indefinite"/>
+              <use href="#wire-wheel" x="170" y="310"/>
+            </g>
           </g>
 
           <!-- Seg 9: rear wheel (wire spokes) — center y=310 -->
           <g opacity="0">
             <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.2455;0.2727;1" dur="11s" repeatCount="1" fill="freeze" data-replay="1"/>
-            <use href="#wire-wheel" x="440" y="310"/>
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="0 440 310" to="360 440 310" dur="3.5s" repeatCount="indefinite"/>
+              <use href="#wire-wheel" x="440" y="310"/>
+            </g>
           </g>
 
           <!-- Seg 10: details — headlight (on stalk), grille slats, hood louvres, door split, cabin window, spare tyre, taillight -->

@@ -286,12 +286,7 @@
   fill: rgba(255, 61, 2, 0.06);
 }
 
-/* Wheel rotation — continuous forward roll */
-.hero-car-anim use[href="#wire-wheel"] {
-  transform-box: fill-box;
-  transform-origin: 50% 50%;
-  animation: wheelSpin 3.5s linear infinite;
-}
+/* Wheel rotation handled via SMIL <animateTransform> in the SVG markup */
 
 /* Motif strip — now a direct child of .hero, spans full page width */
 .hero > .hero-motif-overlay {
