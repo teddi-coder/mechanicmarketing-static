@@ -288,37 +288,33 @@
 
 /* Wheel rotation handled via SMIL <animateTransform> in the SVG markup */
 
-/* Motif strip — full-width bottom of hero, single seamless scrolling row */
+/* Motif strip — full-width bottom of hero, seamless background-repeat tiling */
 .hero > .hero-motif-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 44px;
   z-index: 3;
   overflow: hidden;
-  opacity: 0.38;
   pointer-events: none;
 }
 
-/* Scrolling track — two identical images side-by-side for seamless loop */
-.hero-motif-track {
-  display: flex;
-  flex-direction: row;
-  animation: heroMotifScroll 28s linear infinite;
-}
-
-.hero-motif-track img {
+/* Single scrolling bg — background-repeat:repeat-x guarantees no seam ever */
+.hero-motif-bg {
+  width: 100%;
   height: 44px;
-  width: auto;
-  opacity: 0.22;
-  display: block;
-  flex-shrink: 0;
+  background-repeat: repeat-x;
+  background-size: 1018px 44px;    /* 4655 × (44/201) ≈ 1018 px */
+  background-position: 0 center;
+  opacity: 0.18;
+  animation: heroMotifScroll 30s linear infinite;
+  will-change: background-position;
 }
 
 @keyframes heroMotifScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { background-position-x: 0; }
+  to   { background-position-x: -1018px; }
 }
 
 @keyframes wheelSpin {
@@ -327,7 +323,7 @@
 }
 
 /* ==========================================================================
-   Services MMMM counter-scroll divider
+   Services MMMM counter-scroll divider — background-repeat for zero seams
    ========================================================================== */
 
 .motif-divider--anim {
@@ -335,43 +331,37 @@
   overflow: hidden;
 }
 
-.motif-divider-row {
+.motif-divider-bg {
+  width: 100%;
   height: 88px;
-  overflow: hidden;
+  background-repeat: repeat-x;
+  background-size: 2036px 88px;    /* 4655 × (88/201) ≈ 2036 px */
+  background-position: 0 center;
+  opacity: 0.20;
+  will-change: background-position;
 }
 
-.motif-divider-track {
-  display: flex;
-  flex-direction: row;
-  animation: motifScrollL 36s linear infinite;
-  will-change: transform;
+.motif-divider-bg--l {
+  animation: motifBgScrollL 38s linear infinite;
 }
 
-.motif-divider-track--rev {
-  animation: motifScrollR 46s linear infinite;
+.motif-divider-bg--r {
+  animation: motifBgScrollR 50s linear infinite;
 }
 
-.motif-divider-track img {
-  height: 88px;
-  width: auto;
-  display: block;
-  flex-shrink: 0;
-  opacity: 0.22;
+@keyframes motifBgScrollL {
+  from { background-position-x: 0; }
+  to   { background-position-x: -2036px; }
 }
 
-@keyframes motifScrollL {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@keyframes motifScrollR {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
+@keyframes motifBgScrollR {
+  from { background-position-x: 0; }
+  to   { background-position-x: 2036px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motif-divider-track,
-  .motif-divider-track--rev { animation: none; }
+  .hero-motif-bg,
+  .motif-divider-bg { animation: none; }
 }
 
 /* ==========================================================================
@@ -462,7 +452,7 @@
   display: flex;
   align-items: center;
   gap: 80px;
-  animation: mm-scroll 34s linear infinite;
+  animation: mm-scroll 22s linear infinite;
   white-space: nowrap;
   will-change: transform;
 }
@@ -733,13 +723,15 @@
    ========================================================================== */
 
 .process {
-  padding: 80px 54px;
+  padding: 64px 54px;
   background: var(--mm-warm-white);
+  position: relative;
+  isolation: isolate;
 }
 
 .process-hdr {
   text-align: center;
-  margin-bottom: 54px;
+  margin-bottom: 44px;
 }
 
 .process-hdr h2 {
@@ -868,7 +860,7 @@
    ========================================================================== */
 
 .cases {
-  padding: 80px 54px;
+  padding: 64px 54px;
   background:
     radial-gradient(ellipse 75% 65% at 100% 0%, rgba(255,61,2,0.055) 0%, transparent 70%),
     radial-gradient(ellipse 45% 50% at 0% 100%, rgba(255,61,2,0.035) 0%, transparent 60%),
@@ -1058,7 +1050,7 @@
    ========================================================================== */
 
 .test {
-  padding: 80px 54px;
+  padding: 64px 54px;
   background: var(--mm-warm-white);
   text-align: center;
   position: relative;
@@ -1106,18 +1098,18 @@
    ========================================================================== */
 
 @keyframes midZoneBreath {
-  0%, 100% { opacity: 0.7; }
-  50%       { opacity: 1;   }
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1;    }
 }
 
 .mid-zone {
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(ellipse 80% 50% at 12%  8%,  rgba(255,61,2,0.042) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 42% at 88% 32%,  rgba(255,61,2,0.028) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 45% at  8% 78%,  rgba(255,61,2,0.028) 0%, transparent 55%),
-    radial-gradient(ellipse 75% 50% at 92% 92%,  rgba(255,61,2,0.038) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 55% at 12%  8%,  rgba(255,61,2,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 32%,  rgba(255,61,2,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 48% at  8% 78%,  rgba(255,61,2,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 75% 52% at 92% 92%,  rgba(255,61,2,0.13) 0%, transparent 60%),
     var(--mm-warm-white);
 }
 
@@ -1127,8 +1119,8 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(ellipse 60% 30% at 50% 50%, rgba(255,61,2,0.022) 0%, transparent 65%);
-  animation: midZoneBreath 18s ease-in-out infinite;
+  background: radial-gradient(ellipse 65% 35% at 50% 50%, rgba(255,61,2,0.09) 0%, transparent 65%);
+  animation: midZoneBreath 14s ease-in-out infinite;
 }
 
 .mid-zone .process,
@@ -1142,12 +1134,37 @@
   border-top: none;
 }
 
-/* Per-section ambient glow — Results 03 */
+/* Per-section ambient glow — Process 02 */
 @keyframes sectionPulse {
-  0%, 100% { opacity: 0.55; }
+  0%, 100% { opacity: 0.6; }
   50%       { opacity: 1; }
 }
 
+.mid-zone .process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 90% 10%, rgba(255,61,2,0.12) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 50% at 10% 90%, rgba(255,61,2,0.09) 0%, transparent 52%);
+  animation: sectionPulse 16s ease-in-out infinite 1s;
+}
+
+/* Per-section ambient glow — Sound Familiar */
+.mid-zone .pain-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,61,2,0.10) 0%, transparent 60%);
+  animation: sectionPulse 12s ease-in-out infinite 2s;
+}
+
+/* Per-section ambient glow — Results 03 */
 .mid-zone .cases::before {
   content: '';
   position: absolute;
@@ -1155,8 +1172,8 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 65% 55% at 88% 15%, rgba(255,61,2,0.065) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 45% at 12% 82%, rgba(255,61,2,0.045) 0%, transparent 55%);
+    radial-gradient(ellipse 65% 55% at 88% 15%, rgba(255,61,2,0.16) 0%, transparent 58%),
+    radial-gradient(ellipse 50% 45% at 12% 82%, rgba(255,61,2,0.11) 0%, transparent 52%);
   animation: sectionPulse 14s ease-in-out infinite;
 }
 
@@ -1170,8 +1187,8 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(255,61,2,0.05) 0%, transparent 58%),
-    radial-gradient(ellipse 40% 55% at 85% 75%, rgba(255,61,2,0.035) 0%, transparent 52%);
+    radial-gradient(ellipse 70% 55% at 50% 30%, rgba(255,61,2,0.14) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 55% at 85% 80%, rgba(255,61,2,0.10) 0%, transparent 52%);
   animation: sectionPulse 18s ease-in-out infinite 4s;
 }
 

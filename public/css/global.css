@@ -486,7 +486,7 @@ img {
 }
 
 .footer-brand p {
-  color: rgba(240,240,236,0.55);
+  color: rgba(240,240,236,0.85);
   font-size: 13px;
   line-height: 1.5;
   margin-top: 8px;
@@ -508,7 +508,7 @@ img {
 
 .footer-col a {
   display: block;
-  color: rgba(240,240,236,0.55);
+  color: rgba(240,240,236,0.85);
   text-decoration: none;
   font-size: 13px;
   margin-bottom: 8px;
@@ -530,8 +530,8 @@ img {
   max-width: 1200px;
   margin: 48px auto 0;
   padding: 24px 40px 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  color: rgba(240,240,236,0.35);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  color: rgba(240,240,236,0.70);
   font-size: 12px;
 }
 
@@ -841,8 +841,10 @@ img {
    ========================================================================== */
 
 .pain-section {
-  padding: 96px 0;
+  padding: 76px 0;
   background: var(--w);
+  position: relative;
+  isolation: isolate;
 }
 
 .pain-section .container {
