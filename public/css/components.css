@@ -273,8 +273,9 @@
   height: 100%;
   max-width: 600px;
   filter:
-    drop-shadow(0 8px 40px rgba(255,61,2,0.1))
-    drop-shadow(0 0 80px rgba(255,61,2,0.055));
+    drop-shadow(0 8px 48px rgba(255,61,2,0.13))
+    drop-shadow(0 0 90px rgba(255,61,2,0.07))
+    drop-shadow(0 0 16px rgba(255,61,2,0.08));
 }
 
 /* Replace heavy dark fills with barely-there warm tint so illustration
@@ -287,6 +288,45 @@
 }
 
 /* Wheel rotation handled via SMIL <animateTransform> in the SVG markup */
+
+/* ── Hero car animation — premium motion enhancements ── */
+
+/* Wheels pop-in with overshoot scale when they appear */
+@keyframes wheelSettle {
+  0%   { transform: scale(0.6); opacity: 0; }
+  65%  { transform: scale(1.08); opacity: 1; }
+  82%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+/* Speech bubble / ROAS badge bounce-in */
+@keyframes badgeBounce {
+  0%   { transform: scale(0.5) translateY(4px); opacity: 0; }
+  60%  { transform: scale(1.08) translateY(-2px); opacity: 1; }
+  80%  { transform: scale(0.96) translateY(1px); }
+  100% { transform: scale(1) translateY(0); }
+}
+/* Subtle car glow pulse after build completes */
+@keyframes carGlowPulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 8px 40px rgba(255,61,2,0.10))
+      drop-shadow(0 0 80px rgba(255,61,2,0.055));
+  }
+  50% {
+    filter:
+      drop-shadow(0 8px 56px rgba(255,61,2,0.18))
+      drop-shadow(0 0 100px rgba(255,61,2,0.10))
+      drop-shadow(0 0 20px rgba(255,61,2,0.12));
+  }
+}
+/* ROAS badge glow filter applied via SVG filter already; CSS adds badge-level depth */
+.mm-orbit-group rect {
+  filter: drop-shadow(0 2px 8px rgba(255,61,2,0.4));
+}
+/* Apply glow pulse to the whole SVG after car build (delay = 11s) */
+.hero-car-anim {
+  animation: carGlowPulse 5s ease-in-out 11s infinite;
+}
 
 /* Motif strip — full-width bottom of hero, seamless background-repeat tiling */
 .hero > .hero-motif-overlay {

@@ -170,13 +170,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <line x1="2.4" y1="-5" x2="2.4" y2="2.5" stroke="#FF3D02" stroke-width="1"/>
             <line x1="-2.8" y1="11" x2="-3.4" y2="18" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
             <line x1="2.8" y1="11" x2="3.4" y2="18" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- ── Premium glow filters ── -->
+          <filter id="car-bloom" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+            <feColorMatrix in="blur" type="matrix"
+              values="1 0 0 0 0.22  0 0.07 0 0 0  0 0 0 0 0  0 0 0 14 -6" result="glow"/>
+            <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="light-glow" x="-200%" y="-200%" width="500%" height="500%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+            <feColorMatrix in="blur" type="matrix"
+              values="1 0 0 0 0.45  0 0.14 0 0 0.04  0 0 0 0 0  0 0 0 22 -9" result="glow"/>
+            <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="badge-glow" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="car-ambient-grad" cx="50%" cy="65%" r="50%">
+            <stop offset="0%" stop-color="#FF3D02" stop-opacity="0.11"/>
+            <stop offset="100%" stop-color="#FF3D02" stop-opacity="0"/>
+          </radialGradient>
           </symbol>
         </defs>
 
         <!-- subtle ground guideline -->
         <line x1="20" y1="370" x2="580" y2="370" stroke="rgba(255,61,2,0.15)" stroke-width="1" stroke-dasharray="4 7"/>
+        <!-- Ambient LED glow behind car — breathes after build completes -->
+        <ellipse cx="295" cy="298" rx="260" ry="62" fill="url(#car-ambient-grad)" opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7" keyTimes="0;0.27;0.32;0.4;1" dur="11s" repeatCount="1" fill="freeze" data-replay="0"/>
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" begin="11s" repeatCount="indefinite"/>
+        </ellipse>
 
-        <g class="mm-car">
+        <g class="mm-car" filter="url(#car-bloom)">
           <!-- Seg 0: front bumper bar -->
           <path d="M 25 300 L 92 300" stroke="#FF3D02" stroke-width="3" stroke-linecap="round" fill="none" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
             <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes="0;0.001;0.0273;1" dur="11s" repeatCount="1" fill="freeze" data-replay="1"/>
@@ -246,7 +273,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- Headlight on stalk -->
             <line x1="100" y1="217" x2="108" y2="217" stroke="#FF3D02" stroke-width="1.5"/>
             <circle cx="113" cy="217" r="8" fill="#1c1c1a" stroke="#FF3D02" stroke-width="2"/>
-            <circle cx="113" cy="217" r="3" fill="#FF3D02"/>
+            <circle cx="113" cy="217" r="3" fill="#FF3D02" filter="url(#light-glow)">
+              <animate attributeName="r" values="3;4.2;3;3.5;3" keyTimes="0;0.3;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.75;1;0.85;1" keyTimes="0;0.3;0.5;0.75;1" dur="3s" repeatCount="indefinite"/>
+            </circle>
             <!-- Hood louvres (5 small vertical slits) -->
             <line x1="180" y1="202" x2="180" y2="225" stroke="#FF3D02" stroke-width="1.2"/>
             <line x1="195" y1="202" x2="195" y2="225" stroke="#FF3D02" stroke-width="1.2"/>
@@ -270,7 +300,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <circle cx="552" cy="252" r="14" fill="#1c1c1a" stroke="#FF3D02" stroke-width="2"/>
             <circle cx="552" cy="252" r="6" fill="none" stroke="#FF3D02" stroke-width="1"/>
             <!-- Taillight -->
-            <circle cx="558" cy="278" r="3" fill="#FF3D02"/>
+            <circle cx="558" cy="278" r="3" fill="#FF3D02" filter="url(#light-glow)">
+              <animate attributeName="r" values="3;4;3" dur="2.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.7;1" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
             <!-- Front bumper support bars -->
             <line x1="40" y1="293" x2="40" y2="300" stroke="#FF3D02" stroke-width="1.4" stroke-linecap="round"/>
             <line x1="80" y1="293" x2="80" y2="300" stroke="#FF3D02" stroke-width="1.4" stroke-linecap="round"/>
@@ -278,7 +311,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <path d="M 40 240 L 25 298" stroke="#FF3D02" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.65"/>
             <!-- Fog light on front nose -->
             <circle cx="35" cy="272" r="5.5" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.8"/>
-            <circle cx="35" cy="272" r="2.2" fill="#FF3D02" opacity="0.85"/>
+            <circle cx="35" cy="272" r="2.2" fill="#FF3D02" filter="url(#light-glow)">
+              <animate attributeName="r" values="2.2;3.2;2.2" dur="3.6s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.85;1;0.85" dur="3.6s" repeatCount="indefinite"/>
+            </circle>
             <!-- Bumper overriders (chrome guards sitting on bumper bar) -->
             <rect x="33" y="295" width="9" height="10" rx="2" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.6"/>
             <rect x="66" y="295" width="9" height="10" rx="2" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.6"/>
@@ -320,6 +356,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <circle cx="0" cy="-14" r="9" fill="none" stroke="#FF3D02" stroke-width="1.8"/>
             <use href="#mm-body"/>
             <animateMotion dur="14s" begin="0s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 -2.5;0 0;0 1.1;0 0" dur="3.2s" repeatCount="indefinite"/>
           </g>
 
           <!-- Mechanic 2 — Kylie / Automotive Insight — 4x ROAS -->
@@ -335,6 +372,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <circle cx="0" cy="-14" r="9" fill="none" stroke="#FF3D02" stroke-width="1.8"/>
             <use href="#mm-body"/>
             <animateMotion dur="14s" begin="-3.5s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 -2;0 0;0 0.9;0 0" dur="3.8s" repeatCount="indefinite"/>
           </g>
 
           <!-- Mechanic 3 — Adrian / Noranda Service Centre — 6x ROAS -->
@@ -350,6 +388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <circle cx="0" cy="-14" r="9" fill="none" stroke="#FF3D02" stroke-width="1.8"/>
             <use href="#mm-body"/>
             <animateMotion dur="14s" begin="-7s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 -3;0 0;0 1.3;0 0" dur="4.3s" repeatCount="indefinite"/>
           </g>
 
           <!-- Mechanic 4 — "Be next" CTA — links to contact page -->
@@ -365,8 +404,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <text x="0" y="-14" text-anchor="middle" dominant-baseline="central" font-family="TT Commons Pro, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="900" fill="#fff">?</text>
               <use href="#mm-body"/>
               <animateMotion dur="14s" begin="-10.5s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            <animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 -2.2;0 0;0 1;0 0" dur="3.5s" repeatCount="indefinite"/>
             </g>
           </a>
+        </g>
+
+        <!-- ── Road atmosphere — moving dashes create forward-motion feel ── -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0.9;0.9" keyTimes="0;0.22;0.27;0.33;1" dur="11s" repeatCount="1" fill="freeze" data-replay="0"/>
+          <!-- Road surface glint -->
+          <line x1="0" y1="373" x2="600" y2="373" stroke="rgba(255,61,2,0.10)" stroke-width="0.6"/>
+          <!-- Fast dashes — road markings flowing left -->
+          <line x1="0" y1="379" x2="600" y2="379"
+                stroke="rgba(255,61,2,0.20)" stroke-width="1.8"
+                stroke-dasharray="26 54" stroke-dashoffset="0">
+            <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="2s" repeatCount="indefinite"/>
+          </line>
+          <!-- Slower distant lane -->
+          <line x1="0" y1="388" x2="600" y2="388"
+                stroke="rgba(255,61,2,0.09)" stroke-width="1"
+                stroke-dasharray="14 72" stroke-dashoffset="0">
+            <animate attributeName="stroke-dashoffset" from="0" to="-86" dur="1.5s" repeatCount="indefinite"/>
+          </line>
+        </g>
+
+        <!-- ── Speed streaks — front of car hints at forward motion ── -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0.8;0.8" keyTimes="0;0.22;0.27;0.33;1" dur="11s" repeatCount="1" fill="freeze" data-replay="0"/>
+          <line x1="0" y1="224" x2="26" y2="224" stroke="rgba(255,61,2,0.28)" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="0" y1="238" x2="18" y2="238" stroke="rgba(255,61,2,0.18)" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="0" y1="252" x2="22" y2="252" stroke="rgba(255,61,2,0.20)" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="0" y1="266" x2="14" y2="266" stroke="rgba(255,61,2,0.14)" stroke-width="0.7" stroke-linecap="round"/>
+          <line x1="0" y1="278" x2="20" y2="278" stroke="rgba(255,61,2,0.16)" stroke-width="0.8" stroke-linecap="round"/>
+        </g>
+
+        <!-- ── Energy pulses — glowing orbs flowing the car-outline path ── -->
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;1;1" keyTimes="0;0.30;0.355;0.40;1" dur="11s" repeatCount="1" fill="freeze" data-replay="0"/>
+          <!-- Pulse 1 — primary bright orb -->
+          <g filter="url(#light-glow)">
+            <circle r="2.8" fill="#FF3D02" opacity="0.85">
+              <animateMotion dur="7s" begin="0s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            </circle>
+          </g>
+          <!-- Pulse 2 — trailing orb, offset phase -->
+          <g filter="url(#light-glow)">
+            <circle r="2" fill="#FF3D02" opacity="0.55">
+              <animateMotion dur="7s" begin="-2.33s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            </circle>
+          </g>
+          <!-- Pulse 3 — faint fast orb -->
+          <g filter="url(#light-glow)">
+            <circle r="1.4" fill="#FF3D02" opacity="0.35">
+              <animateMotion dur="5s" begin="-1.0s" repeatCount="indefinite"><mpath href="#car-outline"/></animateMotion>
+            </circle>
+          </g>
         </g>
       </svg>
     </div>
