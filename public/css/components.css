@@ -348,8 +348,6 @@
   background-size: 1018px 44px;    /* 4655 × (44/201) ≈ 1018 px */
   background-position: 0 center;
   opacity: 0.18;
-  animation: heroMotifScroll 30s linear infinite;
-  will-change: background-position;
 }
 
 @keyframes heroMotifScroll {
