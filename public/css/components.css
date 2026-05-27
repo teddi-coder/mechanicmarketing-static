@@ -76,7 +76,7 @@
 
 .btn-o {
   background: var(--mm-orange);
-  color: var(--mm-dark);
+  color: #fff;
 }
 
 .btn-o:hover {
