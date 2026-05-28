@@ -1428,228 +1428,418 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
-<!-- ── Scroll journey car — drives through page whitespace while user scrolls ── -->
+
+<!-- ── Road Journey System: canvas road + path-following car ── -->
+<canvas id="road-canvas" aria-hidden="true"></canvas>
+
 <div id="sc-car" aria-hidden="true">
-  <div class="sc-car-body">
-    <svg id="sc-car-svg" viewBox="0 0 175 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="sc-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
-          <feColorMatrix in="blur" type="matrix"
-            values="1 0 0 0 0.4  0 0.1 0 0 0  0 0 0 0 0  0 0 0 18 -8" result="glow"/>
-          <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <!-- Ambient glow under car -->
-      <ellipse cx="88" cy="106" rx="72" ry="7" fill="#FF3D02" opacity="0.09"/>
-      <!-- Front face / bumper -->
-      <line x1="8" y1="66" x2="8" y2="88" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
-      <!-- Grille box -->
-      <rect x="8" y="54" width="15" height="13" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.5" stroke-linejoin="round"/>
-      <!-- Hood (long flat, slopes slightly toward rear) -->
-      <line x1="8" y1="64" x2="78" y2="60" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
-      <!-- Windshield + roof + rear cabin -->
-      <path d="M 78 60 L 82 53 L 93 37 L 142 37 L 148 53 L 157 62 C 161 71 163 83 161 88"
-            stroke="#FF3D02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <!-- Cabin side window -->
-      <path d="M 96 41 L 128 41 L 137 59 L 94 59 Z"
-            fill="rgba(255,61,2,0.06)" stroke="#FF3D02" stroke-width="1.2" stroke-linejoin="round"/>
-      <!-- Front fender arch -->
-      <path d="M 8 78 C 11 85 26 90 45 90 C 60 90 64 90 65 90"
-            stroke="#FF3D02" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      <!-- Body sill between wheels -->
-      <line x1="65" y1="90" x2="118" y2="90" stroke="#FF3D02" stroke-width="1.8"/>
-      <!-- Rear fender arch -->
-      <path d="M 118 90 C 120 90 125 90 140 90 C 155 90 161 85 161 90"
-            stroke="#FF3D02" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-      <!-- Front bumper bar -->
-      <line x1="4" y1="92" x2="27" y2="92" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
-      <!-- Rear bumper bar -->
-      <line x1="159" y1="92" x2="173" y2="92" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
-      <!-- Door split line -->
-      <line x1="100" y1="60" x2="100" y2="90" stroke="#FF3D02" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
-      <!-- Belt line trim -->
-      <line x1="66" y1="75" x2="115" y2="75" stroke="#FF3D02" stroke-width="0.7" opacity="0.4"/>
-      <!-- Hood louvres -->
-      <line x1="48" y1="62" x2="48" y2="70" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
-      <line x1="54" y1="62" x2="54" y2="70" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
-      <line x1="60" y1="61" x2="60" y2="69" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
-      <line x1="66" y1="61" x2="66" y2="69" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
-      <!-- Headlight -->
-      <circle cx="28" cy="64" r="6" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.5"/>
-      <circle cx="28" cy="64" r="2.5" fill="#FF3D02" filter="url(#sc-glow)"/>
-      <!-- Taillight -->
-      <circle cx="162" cy="82" r="3" fill="#FF3D02" filter="url(#sc-glow)"/>
-      <!-- Spare wheel on rear -->
-      <circle cx="167" cy="73" r="8" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.4"/>
-      <circle cx="167" cy="73" r="3.5" fill="none" stroke="#FF3D02" stroke-width="0.7"/>
-      <!-- Front splash apron detail -->
-      <line x1="23" y1="64" x2="23" y2="88" stroke="#FF3D02" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
-      <!-- Front wheel — rotation driven by JS -->
-      <g class="sc-fw">
-        <circle cx="45" cy="90" r="18" fill="none" stroke="#FF3D02" stroke-width="2"/>
-        <circle cx="45" cy="90" r="7" fill="#FF3D02"/>
-        <g stroke="#FF3D02" stroke-width="0.9" stroke-linecap="round">
-          <line x1="52" y1="90" x2="63" y2="90"/>
-          <line x1="50" y1="85" x2="58" y2="77"/>
-          <line x1="45" y1="83" x2="45" y2="72"/>
-          <line x1="40" y1="85" x2="32" y2="77"/>
-          <line x1="38" y1="90" x2="27" y2="90"/>
-          <line x1="40" y1="95" x2="32" y2="103"/>
-          <line x1="45" y1="97" x2="45" y2="108"/>
-          <line x1="50" y1="95" x2="58" y2="103"/>
-        </g>
+  <svg id="sc-car-svg" viewBox="0 0 175 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="sc-glow" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+        <feColorMatrix in="blur" type="matrix"
+          values="1 0 0 0 0.4  0 0.1 0 0 0  0 0 0 0 0  0 0 0 18 -8" result="glow"/>
+        <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Ambient glow under car -->
+    <ellipse cx="88" cy="106" rx="72" ry="7" fill="#FF3D02" opacity="0.09"/>
+    <!-- Front face -->
+    <line x1="8" y1="66" x2="8" y2="88" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
+    <!-- Grille box -->
+    <rect x="8" y="54" width="15" height="13" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- Hood -->
+    <line x1="8" y1="64" x2="78" y2="60" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
+    <!-- Windshield + roof + rear cabin -->
+    <path d="M 78 60 L 82 53 L 93 37 L 142 37 L 148 53 L 157 62 C 161 71 163 83 161 88"
+          stroke="#FF3D02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Cabin side window -->
+    <path d="M 96 41 L 128 41 L 137 59 L 94 59 Z"
+          fill="rgba(255,61,2,0.06)" stroke="#FF3D02" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- Front fender arch -->
+    <path d="M 8 78 C 11 85 26 90 45 90 C 60 90 64 90 65 90"
+          stroke="#FF3D02" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- Body sill -->
+    <line x1="65" y1="90" x2="118" y2="90" stroke="#FF3D02" stroke-width="1.8"/>
+    <!-- Rear fender arch -->
+    <path d="M 118 90 C 120 90 125 90 140 90 C 155 90 161 85 161 90"
+          stroke="#FF3D02" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- Front bumper bar -->
+    <line x1="4" y1="92" x2="27" y2="92" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
+    <!-- Rear bumper bar -->
+    <line x1="159" y1="92" x2="173" y2="92" stroke="#FF3D02" stroke-width="2" stroke-linecap="round"/>
+    <!-- Door split -->
+    <line x1="100" y1="60" x2="100" y2="90" stroke="#FF3D02" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+    <!-- Belt line -->
+    <line x1="66" y1="75" x2="115" y2="75" stroke="#FF3D02" stroke-width="0.7" opacity="0.4"/>
+    <!-- Hood louvres -->
+    <line x1="48" y1="62" x2="48" y2="70" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
+    <line x1="54" y1="62" x2="54" y2="70" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
+    <line x1="60" y1="61" x2="60" y2="69" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
+    <line x1="66" y1="61" x2="66" y2="69" stroke="#FF3D02" stroke-width="0.8" opacity="0.45"/>
+    <!-- Headlight -->
+    <circle cx="28" cy="64" r="6" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.5"/>
+    <circle cx="28" cy="64" r="2.5" fill="#FF3D02" filter="url(#sc-glow)"/>
+    <!-- Taillight -->
+    <circle cx="162" cy="82" r="3" fill="#FF3D02" filter="url(#sc-glow)"/>
+    <!-- Spare wheel -->
+    <circle cx="167" cy="73" r="8" fill="#1c1c1a" stroke="#FF3D02" stroke-width="1.4"/>
+    <circle cx="167" cy="73" r="3.5" fill="none" stroke="#FF3D02" stroke-width="0.7"/>
+    <!-- Front splash apron -->
+    <line x1="23" y1="64" x2="23" y2="88" stroke="#FF3D02" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+    <!-- Front wheel (rotation via JS) -->
+    <g class="sc-fw">
+      <circle cx="45" cy="90" r="18" fill="none" stroke="#FF3D02" stroke-width="2"/>
+      <circle cx="45" cy="90" r="7" fill="#FF3D02"/>
+      <g stroke="#FF3D02" stroke-width="0.9" stroke-linecap="round">
+        <line x1="52" y1="90" x2="63" y2="90"/><line x1="50" y1="85" x2="58" y2="77"/>
+        <line x1="45" y1="83" x2="45" y2="72"/><line x1="40" y1="85" x2="32" y2="77"/>
+        <line x1="38" y1="90" x2="27" y2="90"/><line x1="40" y1="95" x2="32" y2="103"/>
+        <line x1="45" y1="97" x2="45" y2="108"/><line x1="50" y1="95" x2="58" y2="103"/>
       </g>
-      <!-- Rear wheel — rotation driven by JS -->
-      <g class="sc-rw">
-        <circle cx="140" cy="90" r="18" fill="none" stroke="#FF3D02" stroke-width="2"/>
-        <circle cx="140" cy="90" r="7" fill="#FF3D02"/>
-        <g stroke="#FF3D02" stroke-width="0.9" stroke-linecap="round">
-          <line x1="147" y1="90" x2="158" y2="90"/>
-          <line x1="145" y1="85" x2="153" y2="77"/>
-          <line x1="140" y1="83" x2="140" y2="72"/>
-          <line x1="135" y1="85" x2="127" y2="77"/>
-          <line x1="133" y1="90" x2="122" y2="90"/>
-          <line x1="135" y1="95" x2="127" y2="103"/>
-          <line x1="140" y1="97" x2="140" y2="108"/>
-          <line x1="145" y1="95" x2="153" y2="103"/>
-        </g>
+    </g>
+    <!-- Rear wheel (rotation via JS) -->
+    <g class="sc-rw">
+      <circle cx="140" cy="90" r="18" fill="none" stroke="#FF3D02" stroke-width="2"/>
+      <circle cx="140" cy="90" r="7" fill="#FF3D02"/>
+      <g stroke="#FF3D02" stroke-width="0.9" stroke-linecap="round">
+        <line x1="147" y1="90" x2="158" y2="90"/><line x1="145" y1="85" x2="153" y2="77"/>
+        <line x1="140" y1="83" x2="140" y2="72"/><line x1="135" y1="85" x2="127" y2="77"/>
+        <line x1="133" y1="90" x2="122" y2="90"/><line x1="135" y1="95" x2="127" y2="103"/>
+        <line x1="140" y1="97" x2="140" y2="108"/><line x1="145" y1="95" x2="153" y2="103"/>
       </g>
-    </svg>
-  </div>
+    </g>
+  </svg>
 </div>
+
 <script>
-/* Scroll journey car — syncs with user scroll throughout homepage */
+/* ============================================================
+   Road Journey System
+   - Canvas draws a purple Catmull-Rom road progressively
+   - Car follows the same path via getPointAtLength sampling
+   - Only active on viewports ≥ 1440 px
+   ============================================================ */
 (function () {
   'use strict';
-  /* Only activate on wide viewports where gutters exist */
   if (window.innerWidth < 1440) return;
 
-  var wrap  = document.getElementById('sc-car');
-  var svg   = document.getElementById('sc-car-svg');
-  if (!wrap || !svg) return;
+  var roadCanvas = document.getElementById('road-canvas');
+  var scCar      = document.getElementById('sc-car');
+  var scSvg      = document.getElementById('sc-car-svg');
+  if (!roadCanvas || !scCar || !scSvg) return;
 
-  var body  = wrap.querySelector('.sc-car-body');
-  var fw    = wrap.querySelector('.sc-fw');   /* front wheel group */
-  var rw    = wrap.querySelector('.sc-rw');   /* rear wheel group */
+  var fw = scSvg.querySelector('.sc-fw');
+  var rw = scSvg.querySelector('.sc-rw');
+  var ctx = roadCanvas.getContext('2d');
 
-  /* Layout constants */
-  var CAR_W     = 100;
-  var GAP       = 28;    /* px from viewport edge */
-  var WHEEL_R   = 18 * (CAR_W / 175);      /* ≈ 10.3 px rendered */
-  var CIRC      = 2 * Math.PI * WHEEL_R;   /* ≈ 64.7 px per revolution */
+  /* ── Constants ── */
+  var CAR_W   = 100;
+  var CAR_H   = 63;   /* rendered height of 175×110 viewBox at 100px width */
+  var GAP     = 28;   /* px from viewport edge to car outer edge */
+  var WHEEL_R = 18 * (CAR_W / 175);
+  var CIRC    = 2 * Math.PI * WHEEL_R;
+  var N_PTS   = 700;  /* path sample resolution */
 
-  /* Section waypoints: section CSS selector → which side car occupies */
-  var selectors = [
-    '.trust-section', '.services', '.process', '.pain-section',
-    '.cases', '.test', '.guarantees-section', '.pricing', '.faq'
-  ];
-  var sides = ['right','left','right','left','right','left','right','left','right'];
-  var secEls   = selectors.map(function (s) { return document.querySelector(s); });
-  var secTops  = [];   /* cached absolute tops — refreshed on resize */
-  var heroEl   = document.querySelector('.hero');
-  var ctaEl    = document.querySelector('.cta-final');
+  /* ── State ── */
+  var pathPts    = [];   /* [{x,y}] sampled path, document coordinates */
+  var maxProg    = 0;    /* furthest scroll progress ever reached */
+  var wheelRot   = 0;
+  var lastScroll = window.scrollY;
+  var dirty      = true;
+  var built      = false;
 
-  function cacheTops() {
-    secTops = secEls.map(function (el) {
-      if (!el) return Infinity;
-      /* Walk offsetParent chain to get absolute document top */
-      var t = 0, node = el;
-      while (node) { t += node.offsetTop; node = node.offsetParent; }
-      return t;
-    });
-  }
-  cacheTops();
-
-  function getX(side) {
-    return side === 'left' ? GAP : window.innerWidth - CAR_W - GAP;
+  /* ── Absolute document-top helper ── */
+  function docTop(sel) {
+    var el = document.querySelector(sel);
+    if (!el) return 0;
+    var t = 0, n = el;
+    while (n) { t += n.offsetTop; n = n.offsetParent; }
+    return t;
   }
 
-  function getSide() {
-    /* Virtual page Y of the car (58% down the viewport) */
-    var pageY = window.scrollY + window.innerHeight * 0.58;
-    var s = 'right';
-    for (var i = 0; i < secTops.length; i++) {
-      if (secTops[i] <= pageY) s = sides[i];
-      else break;
+  /* ── Build Catmull-Rom path string ── */
+  function makeSvgPath(pts) {
+    var d = 'M' + pts[0].x.toFixed(2) + ' ' + pts[0].y.toFixed(2);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[Math.max(0, i - 1)];
+      var p1 = pts[i];
+      var p2 = pts[i + 1];
+      var p3 = pts[Math.min(pts.length - 1, i + 2)];
+      var c1x = (p1.x + (p2.x - p0.x) / 6).toFixed(2);
+      var c1y = (p1.y + (p2.y - p0.y) / 6).toFixed(2);
+      var c2x = (p2.x - (p3.x - p1.x) / 6).toFixed(2);
+      var c2y = (p2.y - (p3.y - p1.y) / 6).toFixed(2);
+      d += ' C' + c1x + ' ' + c1y + ',' + c2x + ' ' + c2y + ',' + p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
     }
-    return s;
+    return d;
   }
 
-  function shouldShow() {
-    var heroOut = !heroEl || heroEl.getBoundingClientRect().bottom < window.innerHeight * 0.25;
-    var ctaFar  = !ctaEl  || ctaEl.getBoundingClientRect().top    > window.innerHeight * 0.70;
-    return heroOut && ctaFar;
+  /* ── Sample path into flat array for fast per-frame lookup ── */
+  function samplePath(waypoints) {
+    /* Temporarily attach a hidden SVG to the DOM for getTotalLength */
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS, 'svg');
+    svg.style.cssText = 'position:absolute;visibility:hidden;top:-9999px;left:-9999px;width:0;height:0;overflow:hidden;';
+    var el  = document.createElementNS(NS, 'path');
+    el.setAttribute('d', makeSvgPath(waypoints));
+    svg.appendChild(el);
+    document.body.appendChild(svg);
+    var len = el.getTotalLength();
+    var pts = [];
+    for (var i = 0; i <= N_PTS; i++) {
+      var p = el.getPointAtLength(i / N_PTS * len);
+      pts.push({ x: p.x, y: p.y });
+    }
+    document.body.removeChild(svg);
+    return pts;
   }
 
-  /* State */
-  var wheelRot    = 0;
-  var lastScrollY = window.scrollY;
-  var scrollTimer = null;
-  var curSide     = '';
+  /* ── Compute waypoints from section positions ── */
+  function buildWaypoints() {
+    var vw = window.innerWidth;
+    /* Gutter centre-lines (where the car centre tracks) */
+    var lx = GAP + CAR_W / 2;        /* left gutter  ≈ 78 px at 1600 */
+    var rx = vw - GAP - CAR_W / 2;   /* right gutter ≈ 1522 px at 1600 */
 
-  /* ── Initialise position without triggering transition ── */
-  wrap.style.transition = 'none';
-  var initSide = getSide();
-  curSide = initSide;
-  wrap.style.transform = 'translateX(' + getX(initSide) + 'px) translateY(-50%)';
-  svg.style.transform  = initSide === 'right' ? 'scaleX(-1)' : 'scaleX(1)';
-  /* Re-enable transitions after two rAF frames (avoids initial snap) */
-  requestAnimationFrame(function () {
-    requestAnimationFrame(function () {
-      wrap.style.transition =
-        'transform 1.1s cubic-bezier(0.45,0,0.55,1), opacity 0.7s ease';
-    });
-  });
+    var heroEl  = document.querySelector('.hero');
+    var heroH   = heroEl ? heroEl.offsetHeight : 720;
+    var trust   = docTop('.trust-section');
+    var svc     = docTop('.services');
+    var proc    = docTop('.process');
+    var pain    = docTop('.pain-section');
+    var cases   = docTop('.cases');
+    var test    = docTop('.test');
+    var guar    = docTop('.guarantees-section');
+    var pricing = docTop('.pricing');
+    var faq     = docTop('.faq');
+    var cta     = docTop('.cta-final');
 
-  /* ── Main scroll handler ── */
-  function onScroll() {
-    var y     = window.scrollY;
-    var delta = y - lastScrollY;
-    lastScrollY = y;
+    /* Helper: vertical mid-point of a section range */
+    function mid(a, b, f) { return a + (b - a) * f; }
 
-    /* Wheel rotation — physically proportional to scroll distance */
+    return [
+      /* Hero — start at right gutter, 45 % down hero (visual center of hero car) */
+      { x: rx, y: heroH * 0.45 },
+      { x: rx, y: heroH * 0.80 },
+
+      /* Trust / stats / logos — right side */
+      { x: rx, y: mid(trust, svc, 0.30) },
+      { x: rx, y: mid(trust, svc, 0.68) },
+
+      /* Services (dark) — curve to left */
+      { x: lx, y: mid(svc, proc, 0.10) },
+      { x: lx, y: mid(svc, proc, 0.45) },
+      { x: lx, y: mid(svc, proc, 0.80) },
+
+      /* Process / 02 — curve to right */
+      { x: rx, y: mid(proc, pain, 0.10) },
+      { x: rx, y: mid(proc, pain, 0.50) },
+      { x: rx, y: mid(proc, pain, 0.80) },
+
+      /* Sound Familiar — curve to left */
+      { x: lx, y: mid(pain, cases, 0.12) },
+      { x: lx, y: mid(pain, cases, 0.50) },
+      { x: lx, y: mid(pain, cases, 0.80) },
+
+      /* Results / 03 — curve to right */
+      { x: rx, y: mid(cases, test, 0.10) },
+      { x: rx, y: mid(cases, test, 0.50) },
+      { x: rx, y: mid(cases, test, 0.80) },
+
+      /* Testimonial — curve to left */
+      { x: lx, y: mid(test, guar, 0.15) },
+      { x: lx, y: mid(test, guar, 0.55) },
+
+      /* Our Commitment (dark) — curve to right */
+      { x: rx, y: mid(guar, pricing, 0.12) },
+      { x: rx, y: mid(guar, pricing, 0.55) },
+      { x: rx, y: mid(guar, pricing, 0.82) },
+
+      /* Investment / Pricing — curve to left */
+      { x: lx, y: mid(pricing, faq, 0.10) },
+      { x: lx, y: mid(pricing, faq, 0.55) },
+      { x: lx, y: mid(pricing, faq, 0.82) },
+
+      /* FAQ — curve to right */
+      { x: rx, y: mid(faq, cta, 0.12) },
+      { x: rx, y: mid(faq, cta, 0.55) },
+
+      /* CTA — glide left and park */
+      { x: lx, y: cta + 60 },
+    ];
+  }
+
+  /* ── Initialise / rebuild path ── */
+  function build() {
+    var waypoints = buildWaypoints();
+    pathPts = samplePath(waypoints);
+    built   = true;
+    dirty   = true;
+  }
+
+  /* ── Resize canvas to viewport ── */
+  function resizeCanvas() {
+    roadCanvas.width  = window.innerWidth;
+    roadCanvas.height = window.innerHeight;
+    dirty = true;
+  }
+
+  /* ── Interpolate path at progress 0-1 ── */
+  function getState(progress) {
+    var fi  = progress * N_PTS;
+    var i0  = Math.max(0, Math.min(N_PTS - 1, Math.floor(fi)));
+    var i1  = Math.min(i0 + 1, N_PTS);
+    var f   = fi - i0;
+    var x   = pathPts[i0].x + f * (pathPts[i1].x - pathPts[i0].x);
+    var y   = pathPts[i0].y + f * (pathPts[i1].y - pathPts[i0].y);
+    /* Tangent: look 12 samples ahead for stable direction */
+    var fwd = Math.min(i0 + 12, N_PTS);
+    var dx  = pathPts[fwd].x - pathPts[i0].x;
+    var dy  = pathPts[fwd].y - pathPts[i0].y;
+    return { x: x, y: y, angle: Math.atan2(dy, dx) * 180 / Math.PI };
+  }
+
+  /* ── Draw road on canvas ── */
+  function drawRoad(scrollY, progress) {
+    var vw = roadCanvas.width;
+    var vh = roadCanvas.height;
+    ctx.clearRect(0, 0, vw, vh);
+
+    if (!built || pathPts.length === 0) return;
+
+    /* Ghost: full path at very low opacity (branded roadmap preview) */
+    ctx.save();
+    ctx.strokeStyle = 'rgba(160,100,220,0.08)';
+    ctx.lineWidth   = 2.8;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    ctx.beginPath();
+    var mv = false;
+    for (var i = 0; i <= N_PTS; i++) {
+      var vy = pathPts[i].y - scrollY;
+      if (vy < -60 || vy > vh + 60) { mv = false; continue; }
+      if (!mv) { ctx.moveTo(pathPts[i].x, vy); mv = true; }
+      else       ctx.lineTo(pathPts[i].x, vy);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    /* Drawn road: accumulated up to maxProg */
+    var drawIdx = Math.floor(maxProg * N_PTS);
+    if (drawIdx < 1) return;
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(150,85,210,0.42)';
+    ctx.lineWidth   = 2.2;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    /* Subtle glow duplicate */
+    ctx.shadowColor  = 'rgba(170,100,240,0.25)';
+    ctx.shadowBlur   = 6;
+    ctx.beginPath();
+    mv = false;
+    for (var j = 0; j <= drawIdx; j++) {
+      var vy2 = pathPts[j].y - scrollY;
+      if (!mv) { ctx.moveTo(pathPts[j].x, vy2); mv = true; }
+      else       ctx.lineTo(pathPts[j].x, vy2);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ── Position car at scroll progress ── */
+  function positionCar(scrollY, st) {
+    /* Convert document Y → viewport Y */
+    var vx = st.x - CAR_W / 2;
+    var vy = st.y - scrollY - CAR_H / 2;
+    scCar.style.transform = 'translate(' + vx.toFixed(1) + 'px,' + vy.toFixed(1) + 'px)';
+
+    /* Facing: car SVG front (headlight) is at LEFT side by default.
+       Moving RIGHT → flip (scaleX -1) so headlight faces right.
+       Moving LEFT  → no flip. */
+    var ang = st.angle;
+    var goingRight = (ang > -90 && ang < 90);
+
+    /* Subtle pitch tilt: sin component of travel angle, clamped ±5° */
+    var tilt = Math.sin(ang * Math.PI / 180) * 5;
+    if (!goingRight) tilt = -tilt;
+    tilt = Math.max(-5, Math.min(5, tilt));
+
+    var flip = goingRight ? 'scaleX(-1) ' : '';
+    var rot  = Math.abs(tilt) > 0.4 ? 'rotate(' + tilt.toFixed(1) + 'deg)' : '';
+    scSvg.style.transform = flip + rot;
+  }
+
+  /* ── Main update ── */
+  function update() {
+    var sy  = window.scrollY;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0 || !built) return;
+
+    var progress = Math.max(0, Math.min(1, sy / max));
+    maxProg = Math.max(maxProg, progress);
+
+    /* Show/hide: hero must have exited, CTA not yet close */
+    var heroEl  = document.querySelector('.hero');
+    var heroOut = !heroEl || heroEl.getBoundingClientRect().bottom < window.innerHeight * 0.18;
+    var ctaEl   = document.querySelector('.cta-final');
+    var ctaFar  = !ctaEl  || ctaEl.getBoundingClientRect().top > window.innerHeight * 0.80;
+
+    if (heroOut && ctaFar) scCar.classList.add('sc-visible');
+    else scCar.classList.remove('sc-visible');
+
+    /* Wheel rotation proportional to scroll delta */
+    var delta = sy - lastScroll;
+    lastScroll = sy;
     if (Math.abs(delta) > 0.5) {
       wheelRot += (delta / CIRC) * 360;
       var rot = wheelRot.toFixed(1);
       if (fw) fw.setAttribute('transform', 'rotate(' + rot + ',45,90)');
       if (rw) rw.setAttribute('transform', 'rotate(' + rot + ',140,90)');
-
-      wrap.classList.add('sc-driving');
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function () {
-        wrap.classList.remove('sc-driving');
-      }, 130);
     }
 
-    /* Lane change */
-    var side = getSide();
-    if (side !== curSide) {
-      curSide = side;
-      wrap.style.transform = 'translateX(' + getX(side) + 'px) translateY(-50%)';
-      /* Flip SVG: left side faces right (toward content), right side faces left */
-      svg.style.transform = side === 'right' ? 'scaleX(-1)' : 'scaleX(1)';
-    }
-
-    /* Show / hide */
-    if (shouldShow()) wrap.classList.add('sc-visible');
-    else wrap.classList.remove('sc-visible');
+    /* Car position & orientation */
+    positionCar(sy, getState(progress));
+    dirty = true;
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* ── RAF render loop ── */
+  function loop() {
+    if (dirty) {
+      drawRoad(window.scrollY, maxProg);
+      dirty = false;
+    }
+    requestAnimationFrame(loop);
+  }
 
+  /* ── Event listeners ── */
+  window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', function () {
     if (window.innerWidth < 1440) {
-      wrap.style.display = 'none';
+      roadCanvas.style.display = 'none';
+      scCar.style.display = 'none';
       return;
     }
-    wrap.style.display = '';
-    cacheTops();
-    wrap.style.transform = 'translateX(' + getX(curSide) + 'px) translateY(-50%)';
+    roadCanvas.style.display = '';
+    scCar.style.display = '';
+    resizeCanvas();
+    maxProg = 0;
+    setTimeout(function () { build(); update(); }, 50);
   }, { passive: true });
 
-  /* Set initial visibility state */
-  onScroll();
+  /* ── Boot: wait for full page layout ── */
+  function init() {
+    resizeCanvas();
+    build();
+    update();
+    requestAnimationFrame(loop);
+  }
+
+  if (document.readyState === 'complete') {
+    init();
+  } else {
+    window.addEventListener('load', init);
+  }
 })();
 </script>
 </body>
