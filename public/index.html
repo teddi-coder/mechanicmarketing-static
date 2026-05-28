@@ -550,88 +550,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="trust-separator"></div>
     <p class="trust-logos-label">Trusted by mechanics across Australia</p>
-    <div class="trust-logos-wrap">
-      <button class="trust-arrow trust-arrow-prev" aria-label="Previous logos">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <div class="trust-logos">
-        <div class="trust-logos-track" id="trust-logos-track">
-          <img src="/images/AR-Logo2020clearbackroundpng.webp" alt="Auto Response">
-          <img src="/images/accelerate-automotive-1.webp" alt="Accelerate Automotive">
-          <img src="/images/bb-garage-1.webp" alt="BB Garage">
-          <img src="/images/brc-1.webp" alt="BRC">
-          <img src="/images/BusseltonAutomotive_Logo-NoBackground-1024x261.png" alt="Busselton Automotive">
-          <img src="/images/LOGO_SMALLER-1-400x82-1.webp" alt="Core Diesel">
-          <img src="/images/DQC-Block-logo-blue-small.jpeg" alt="Dons Quality Car Care">
-          <img src="/images/logo_mvm.png" alt="MVM">
-          <img src="/images/performance-plus-logo.gif" alt="Performance Plus">
-          <img src="/images/Ultra-Tune-no-border-456-uneven-square-2.png" alt="Ultra Tune North Ryde">
-        </div>
-      </div>
-      <button class="trust-arrow trust-arrow-next" aria-label="Next logos">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
+    <div class="trust-logos-static">
+      <img src="/images/Ultra-Tune-no-border-456-uneven-square-2.png" alt="Ultra Tune North Ryde">
+      <img src="/images/accelerate-automotive-1.webp" alt="Accelerate Automotive">
+      <img src="/images/bb-garage-1.webp" alt="BB Garage">
+      <img src="/images/BusseltonAutomotive_Logo-NoBackground-1024x261.png" alt="Busselton Automotive">
+      <img src="/images/LOGO_SMALLER-1-400x82-1.webp" alt="Core Diesel">
+      <img src="/images/brc-1.webp" alt="BRC">
+      <img src="/images/AR-Logo2020clearbackroundpng.webp" alt="Auto Response">
+      <img src="/images/DQC-Block-logo-blue-small.jpeg" alt="Dons Quality Car Care">
     </div>
-    <script>
-    /* Logo slider — click-only navigation, no auto-scroll */
-    (function () {
-      var track = document.getElementById('trust-logos-track');
-      if (!track) return;
-
-      /* Kill any CSS animation */
-      track.style.animation = 'none';
-      track.style.transition = 'transform 0.48s cubic-bezier(0.25,0.46,0.45,0.94)';
-
-      var items = Array.from(track.querySelectorAll('img'));
-      var idx   = 0; /* current first-visible logo index */
-      var GAP   = 80; /* matches CSS gap */
-      var busy  = false;
-
-      /* Compute translateX needed to show logos starting at `i` */
-      function offsetAt(i) {
-        var x = 0;
-        for (var n = 0; n < i; n++) {
-          x += (items[n].offsetWidth || 80) + GAP;
-        }
-        return -x;
-      }
-
-      function go(dir) {
-        if (busy) return;
-        var next = idx + dir;
-        /* Clamp so we don't scroll past the last logo */
-        next = Math.max(0, Math.min(items.length - 1, next));
-        if (next === idx) return;
-        busy = true;
-        idx  = next;
-        track.style.transform = 'translateX(' + offsetAt(idx) + 'px)';
-        setTimeout(function () { busy = false; }, 500);
-      }
-
-      /* Update arrow visibility */
-      function refreshArrows() {
-        var btnPrev = document.querySelector('.trust-arrow-prev');
-        var btnNext = document.querySelector('.trust-arrow-next');
-        if (btnPrev) btnPrev.style.opacity = idx === 0 ? '0.3' : '1';
-        if (btnNext) btnNext.style.opacity = idx === items.length - 1 ? '0.3' : '1';
-      }
-
-      /* Re-apply on resize */
-      window.addEventListener('resize', function () {
-        track.style.transition = 'none';
-        track.style.transform  = 'translateX(' + offsetAt(idx) + 'px)';
-        track.getBoundingClientRect();
-        track.style.transition = 'transform 0.48s cubic-bezier(0.25,0.46,0.45,0.94)';
-        refreshArrows();
-      }, { passive: true });
-
-      var btnPrev = document.querySelector('.trust-arrow-prev');
-      var btnNext = document.querySelector('.trust-arrow-next');
-      if (btnPrev) btnPrev.addEventListener('click', function () { go(-1); refreshArrows(); });
-      if (btnNext) btnNext.addEventListener('click', function () { go(1);  refreshArrows(); });
-      refreshArrows();
-    })();
-    </script>
   </div>
 </section>
 
@@ -1121,6 +1049,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3 class="pain-card-title">You've tried ads before and it just didn't work.</h3>
         <p>Money went in, leads didn't come out. Or the leads weren't the right jobs. The problem usually isn't ads. It's that whoever ran them didn't understand your workshop or your customers.</p>
       </div>
+      <div class="pain-card">
+        <h3 class="pain-card-title">Your speciality — dyno tuning, DPF cleaning, diesel — isn't finding the customers who need it.</h3>
+        <p>You do the work that other shops can't. But if you're not showing up online for those exact searches, you're invisible to the customers willing to pay for it. That's money left on the table every single week.</p>
+      </div>
     </div>
     <div style="text-align:center;margin-top:var(--sp-xl);">
       <a href="/contact.html" class="btn btn-o">Book a Free Call →</a>
@@ -1138,6 +1070,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </button>
     <div class="cases-carousel-viewport">
       <div class="cases-carousel-track">
+        <a href="/case-studies/core-diesel.html" class="case">
+          <div class="case-img"><img src="/images/f6cd20a907dcb87fbfe8f30df3ba767c.webp" alt="Core Diesel"></div>
+          <div class="case-body"><h3>Core Diesel</h3><p>Built for power and engineered for record leads through a full digital overhaul.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a href="/case-studies/busselton-automotive.html" class="case">
+          <div class="case-img"><img src="/images/Team1-min.jpg" alt="Busselton Automotive"></div>
+          <div class="case-body"><h3>Busselton Automotive</h3><p>Driving trust and traction as the go-to shop for GVM and suspension.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
         <a href="/case-studies/bb-garage.html" class="case">
           <div class="case-img"><img src="/images/20250526_BB-Garage_2.jpg" alt="BB Garage"></div>
           <div class="case-body"><h3>BB Garage</h3><p>Best month, every month. Dominating diesel performance with smart marketing.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
@@ -1145,14 +1085,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="/case-studies/accelerate-automotive.html" class="case">
           <div class="case-img"><img src="/images/accelerate_auto_1770588026_3828291752873363961_4128531570.jpg" alt="Accelerate Automotive"></div>
           <div class="case-body"><h3>Accelerate Automotive</h3><p>Tuning for growth through a digital strategy driving record results.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
-        </a>
-        <a href="/case-studies/busselton-automotive.html" class="case">
-          <div class="case-img"><img src="/images/Team1-min.jpg" alt="Busselton Automotive"></div>
-          <div class="case-body"><h3>Busselton Automotive</h3><p>Driving trust and traction as the go-to shop for GVM and suspension.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
-        </a>
-        <a href="/case-studies/core-diesel.html" class="case">
-          <div class="case-img"><img src="/images/f6cd20a907dcb87fbfe8f30df3ba767c.webp" alt="Core Diesel"></div>
-          <div class="case-body"><h3>Core Diesel</h3><p>Built for power and engineered for record leads through a full digital overhaul.</p><span class="case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
         </a>
       </div>
     </div>

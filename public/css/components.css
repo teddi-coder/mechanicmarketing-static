@@ -486,6 +486,32 @@
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
+/* Static trust logo row — no carousel, no arrows */
+.trust-logos-static {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 36px 56px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.trust-logos-static img {
+  height: 36px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  opacity: 0.52;
+  filter: grayscale(100%);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.trust-logos-static img:hover {
+  opacity: 0.78;
+  filter: grayscale(40%);
+}
+
 /* Trust logos label */
 .trust-logos-label {
   text-align: center;
