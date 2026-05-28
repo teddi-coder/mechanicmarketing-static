@@ -2144,36 +2144,47 @@
 }
 
 /* ==========================================================================
-   Stats ticker — Guy review
+   Stats ticker — seamless marquee (4 groups, translateX(-25%) = 1 group)
    ========================================================================== */
 .stats-ticker {
   overflow: hidden;
   background: #fff;
-  padding: 10px 0;
+  padding: 9px 0;
   border-bottom: 1px solid #e8e8e6;
 }
 .ticker-track {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  white-space: nowrap;
-  animation: ticker 22s linear infinite;
+  will-change: transform;
+  animation: marquee 24s linear infinite;
 }
-.ticker-track span {
+.ticker-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px; /* matches gap so cross-group spacing = within-group spacing */
+  flex-shrink: 0;
+}
+.ticker-group span {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--mm-dark);
+  white-space: nowrap;
 }
-.ticker-dot {
+.ticker-sep {
   color: var(--mm-orange) !important;
-  font-weight: 700;
+  font-size: 9px !important;
+  flex-shrink: 0;
 }
-@keyframes ticker {
+@keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-25%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation-play-state: paused; }
 }
 
 /* ===================================================================
