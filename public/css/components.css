@@ -545,13 +545,8 @@
   display: flex;
   align-items: center;
   gap: 80px;
-  animation: mm-scroll 18s linear infinite;
   white-space: nowrap;
   will-change: transform;
-}
-
-.trust-logos-track:hover {
-  animation-play-state: paused;
 }
 
 .trust-logos-track img {
@@ -562,8 +557,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .trust-logos-track { animation: none; flex-wrap: wrap; justify-content: center; gap: 40px; }
-  .trust-arrow { display: none; }
+  .trust-logos-track { flex-wrap: wrap; justify-content: center; gap: 40px; }
 }
 
 /* Legacy ticker/logos kept for other pages */
