@@ -33,33 +33,25 @@ Message:
 ${message || 'No message provided'}
   `.trim();
 
-  // Send via Mailchannels (free, no API key required on Cloudflare Workers)
-  const mailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
+  // Send via Resend API
+  const mailResponse = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${context.env.RESEND_API_KEY}`,
+    },
     body: JSON.stringify({
-      personalizations: [{
-        to: [{ email: 'hello@mechanicmarketing.co', name: 'Mechanic Marketing' }],
-      }],
-      from: {
-        email: 'noreply@mechanicmarketing.co',
-        name: 'Mechanic Marketing Website',
-      },
-      reply_to: {
-        email: email,
-        name: full_name,
-      },
+      from: 'Mechanic Marketing Website <noreply@mechanicmarketing.co>',
+      to: ['hello@mechanicmarketing.co'],
+      reply_to: `${full_name} <${email}>`,
       subject: `New enquiry: ${workshop_name || full_name}`,
-      content: [{
-        type: 'text/plain',
-        value: emailBody,
-      }],
+      text: emailBody,
     }),
   });
 
   if (!mailResponse.ok) {
     const error = await mailResponse.text();
-    console.error('Mailchannels error:', error);
+    console.error('Resend error:', error);
     return Response.json({ success: false, error: 'Failed to send email. Please try again.' }, { status: 500 });
   }
 
