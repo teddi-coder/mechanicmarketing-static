@@ -1326,6 +1326,101 @@ a.blog-card:hover {
 }
 
 /* ==========================================================================
+   Nav — Centered layout (logo left | links centre | CTA+toggle right)
+   Overrides the inline display:flex;justify-content:space-between on .mm-nav
+   ========================================================================== */
+
+.mm-nav {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.mm-nav .mm-nav-logo {
+  justify-self: start;
+}
+
+.mm-nav .mm-nav-links {
+  justify-self: center;
+}
+
+/* Right column: CTA button + mobile toggle live together here */
+.mm-nav .mm-nav-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* "Get in Touch" CTA hover — matches .btn-o:hover on the rest of the site */
+.mm-nav-cta {
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.mm-nav-cta:hover {
+  background: #FF6746 !important;
+  box-shadow: 0 6px 20px rgba(255, 61, 2, 0.4);
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+/* On mobile: shrink CTA padding so logo + CTA + toggle all fit */
+@media (max-width: 768px) {
+  .mm-nav-cta {
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ==========================================================================
+   Nav — Industries dropdown
+   ========================================================================== */
+
+.mm-nav-industries {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mm-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -16px;
+  min-width: 196px;
+  background: #111;
+  border-top: 3px solid #FF3D02;
+  padding: 4px 0;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.mm-nav-industries:hover .mm-nav-dropdown { display: block; }
+
+.mm-nav-dropdown a {
+  display: block;
+  padding: 10px 20px;
+  font-family: 'TT Commons Pro', 'TT Commons', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #F0F0EC;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mm-nav-dropdown a:hover {
+  background: #1e1e1e;
+  color: #FF3D02;
+}
+
+@media (max-width: 768px) {
+  .mm-nav-dropdown { display: none !important; }
+}
+
+/* ==========================================================================
    Case Studies Hub — Sub-heading
    ========================================================================== */
 
