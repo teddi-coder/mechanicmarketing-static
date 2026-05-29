@@ -76,7 +76,7 @@
 
 .btn-o {
   background: var(--mm-orange);
-  color: var(--mm-dark);
+  color: #fff;
 }
 
 .btn-o:hover {
@@ -156,7 +156,7 @@
 }
 
 .hero-text {
-  padding: 81px 54px;
+  padding: 64px 48px 64px 116px; /* left gutter matches right side (88px padding + 25px SVG internal + 4px centering) */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -265,7 +265,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 24px 76px; /* bottom clears the motif strip */
+  padding: 20px 88px 76px 24px; /* right gutter matches left text column */
 }
 
 .hero-car-anim {
@@ -273,8 +273,9 @@
   height: 100%;
   max-width: 600px;
   filter:
-    drop-shadow(0 8px 40px rgba(255,61,2,0.1))
-    drop-shadow(0 0 80px rgba(255,61,2,0.055));
+    drop-shadow(0 8px 48px rgba(255,61,2,0.13))
+    drop-shadow(0 0 90px rgba(255,61,2,0.07))
+    drop-shadow(0 0 16px rgba(255,61,2,0.08));
 }
 
 /* Replace heavy dark fills with barely-there warm tint so illustration
@@ -288,48 +289,70 @@
 
 /* Wheel rotation handled via SMIL <animateTransform> in the SVG markup */
 
-/* Motif strip — now a direct child of .hero, spans full page width */
+/* ── Hero car animation — premium motion enhancements ── */
+
+/* Wheels pop-in with overshoot scale when they appear */
+@keyframes wheelSettle {
+  0%   { transform: scale(0.6); opacity: 0; }
+  65%  { transform: scale(1.08); opacity: 1; }
+  82%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+/* Speech bubble / ROAS badge bounce-in */
+@keyframes badgeBounce {
+  0%   { transform: scale(0.5) translateY(4px); opacity: 0; }
+  60%  { transform: scale(1.08) translateY(-2px); opacity: 1; }
+  80%  { transform: scale(0.96) translateY(1px); }
+  100% { transform: scale(1) translateY(0); }
+}
+/* Subtle car glow pulse after build completes */
+@keyframes carGlowPulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 8px 40px rgba(255,61,2,0.10))
+      drop-shadow(0 0 80px rgba(255,61,2,0.055));
+  }
+  50% {
+    filter:
+      drop-shadow(0 8px 56px rgba(255,61,2,0.18))
+      drop-shadow(0 0 100px rgba(255,61,2,0.10))
+      drop-shadow(0 0 20px rgba(255,61,2,0.12));
+  }
+}
+/* ROAS badge glow filter applied via SVG filter already; CSS adds badge-level depth */
+.mm-orbit-group rect {
+  filter: drop-shadow(0 2px 8px rgba(255,61,2,0.4));
+}
+/* Apply glow pulse to the whole SVG after car build (delay = 11s) */
+.hero-car-anim {
+  animation: carGlowPulse 5s ease-in-out 11s infinite;
+}
+
+/* Motif strip — full-width bottom of hero, seamless background-repeat tiling */
 .hero > .hero-motif-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 44px;
   z-index: 3;
   overflow: hidden;
-  opacity: 0.38;
   pointer-events: none;
 }
 
-/* Float wrapper — subtle bobbing + motion blur for speed-trail feel */
-.hero-motif-float {
-  animation: heroMotifFloat 3.5s ease-in-out infinite;
-  filter: blur(1px);
-}
-
-/* Scrolling track — two identical images side-by-side for seamless loop */
-.hero-motif-track {
-  display: flex;
-  flex-direction: row;
-  animation: heroMotifScroll 22s linear infinite;
-}
-
-.hero-motif-track img {
+/* Single scrolling bg — background-repeat:repeat-x guarantees no seam ever */
+.hero-motif-bg {
+  width: 100%;
   height: 44px;
-  width: auto;
-  opacity: 0.22;
-  display: block;
-  flex-shrink: 0;
+  background-repeat: repeat-x;
+  background-size: 1018px 44px;    /* 4655 × (44/201) ≈ 1018 px */
+  background-position: 0 center;
+  opacity: 0.18;
 }
 
 @keyframes heroMotifScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@keyframes heroMotifFloat {
-  0%, 100% { transform: translateY(10px); }
-  50%      { transform: translateY(4px); }
+  from { background-position-x: 0; }
+  to   { background-position-x: -1018px; }
 }
 
 @keyframes wheelSpin {
@@ -352,6 +375,48 @@
 }
 
 /* ==========================================================================
+   Services MMMM counter-scroll divider — background-repeat for zero seams
+   ========================================================================== */
+
+.motif-divider--anim {
+  line-height: 0;
+  overflow: hidden;
+}
+
+.motif-divider-bg {
+  width: 100%;
+  height: 88px;
+  background-repeat: repeat-x;
+  background-size: 2036px 88px;    /* 4655 × (88/201) ≈ 2036 px */
+  background-position: 0 center;
+  opacity: 0.20;
+  will-change: background-position;
+}
+
+.motif-divider-bg--l {
+  animation: motifBgScrollL 38s linear infinite;
+}
+
+.motif-divider-bg--r {
+  animation: motifBgScrollR 50s linear infinite;
+}
+
+@keyframes motifBgScrollL {
+  from { background-position-x: 0; }
+  to   { background-position-x: -2036px; }
+}
+
+@keyframes motifBgScrollR {
+  from { background-position-x: 0; }
+  to   { background-position-x: 2036px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motif-bg,
+  .motif-divider-bg { animation: none; }
+}
+
+/* ==========================================================================
    Trust Section — unified stats + logo strip
    ========================================================================== */
 
@@ -362,7 +427,7 @@
 
 .trust-section {
   background: var(--mm-warm-white);
-  padding: 64px 54px 56px;
+  padding: 48px 54px 44px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
@@ -435,17 +500,93 @@
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
+/* Static trust logo row — no carousel, no arrows */
+.trust-logos-static {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 36px 56px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.trust-logos-static img {
+  height: 36px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  opacity: 0.52;
+  filter: grayscale(100%);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.trust-logos-static img:hover {
+  opacity: 0.78;
+  filter: grayscale(40%);
+}
+
+/* Trust logos label */
+.trust-logos-label {
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(28,28,26,0.38);
+  margin: 0 0 20px;
+}
+
+/* Logo slider wrapper with arrows */
+.trust-logos-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.trust-logos-wrap .trust-logos {
+  flex: 1;
+  max-width: none;
+  margin: 0;
+}
+
+.trust-arrow {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(28,28,26,0.14);
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  color: rgba(28,28,26,0.45);
+  padding: 0;
+}
+
+.trust-arrow:hover {
+  border-color: rgba(255,61,2,0.38);
+  color: #FF3D02;
+  box-shadow: 0 2px 10px rgba(255,61,2,0.10);
+}
+
+.trust-arrow svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
 .trust-logos-track {
   display: flex;
   align-items: center;
   gap: 80px;
-  animation: mm-scroll 34s linear infinite;
   white-space: nowrap;
   will-change: transform;
-}
-
-.trust-logos-track:hover {
-  animation-play-state: paused;
 }
 
 .trust-logos-track img {
@@ -456,7 +597,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .trust-logos-track { animation: none; flex-wrap: wrap; justify-content: center; gap: 40px; }
+  .trust-logos-track { flex-wrap: wrap; justify-content: center; gap: 40px; }
 }
 
 /* Legacy ticker/logos kept for other pages */
@@ -560,15 +701,20 @@
    ========================================================================== */
 
 .services {
-  padding: 121px 54px;
+  padding: 80px 54px;
   background: var(--mm-dark);
   text-align: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .services-hdr {
   max-width: 680px;
-  margin: 0 auto 72px;
+  margin: 0 auto 48px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .services-hdr h2 {
@@ -596,6 +742,27 @@
   gap: 15px;
   max-width: 1100px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Animated ambient glow — sits between dark bg and card content */
+@keyframes servicesGlow {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+.services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 55% at 15% 45%, rgba(255,61,2,0.11) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 40% at 82% 20%, rgba(255,61,2,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 50% at 55% 88%, rgba(255,61,2,0.07) 0%, transparent 50%);
+  animation: servicesGlow 11s ease-in-out infinite;
 }
 
 .svc {
@@ -684,13 +851,15 @@
    ========================================================================== */
 
 .process {
-  padding: 121px 54px;
+  padding: 64px 54px;
   background: var(--mm-warm-white);
+  position: relative;
+  isolation: isolate;
 }
 
 .process-hdr {
   text-align: center;
-  margin-bottom: 81px;
+  margin-bottom: 44px;
 }
 
 .process-hdr h2 {
@@ -819,16 +988,18 @@
    ========================================================================== */
 
 .cases {
-  padding: 121px 54px;
+  padding: 64px 54px;
   background:
     radial-gradient(ellipse 75% 65% at 100% 0%, rgba(255,61,2,0.055) 0%, transparent 70%),
     radial-gradient(ellipse 45% 50% at 0% 100%, rgba(255,61,2,0.035) 0%, transparent 60%),
     #ffffff;
   border-top: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  isolation: isolate;
 }
 
 .cases-hdr {
-  margin-bottom: 54px;
+  margin-bottom: 36px;
   text-align: center;
 }
 
@@ -1007,9 +1178,11 @@
    ========================================================================== */
 
 .test {
-  padding: 121px 54px;
+  padding: 64px 54px;
   background: var(--mm-warm-white);
   text-align: center;
+  position: relative;
+  isolation: isolate;
 }
 
 .testimonial-card {
@@ -1053,18 +1226,18 @@
    ========================================================================== */
 
 @keyframes midZoneBreath {
-  0%, 100% { opacity: 0.7; }
-  50%       { opacity: 1;   }
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1;    }
 }
 
 .mid-zone {
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(ellipse 80% 50% at 12%  8%,  rgba(255,61,2,0.042) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 42% at 88% 32%,  rgba(255,61,2,0.028) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 45% at  8% 78%,  rgba(255,61,2,0.028) 0%, transparent 55%),
-    radial-gradient(ellipse 75% 50% at 92% 92%,  rgba(255,61,2,0.038) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 55% at 12%  8%,  rgba(255,61,2,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 88% 32%,  rgba(255,61,2,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 48% at  8% 78%,  rgba(255,61,2,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 75% 52% at 92% 92%,  rgba(255,61,2,0.13) 0%, transparent 60%),
     var(--mm-warm-white);
 }
 
@@ -1074,8 +1247,8 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(ellipse 60% 30% at 50% 50%, rgba(255,61,2,0.022) 0%, transparent 65%);
-  animation: midZoneBreath 18s ease-in-out infinite;
+  background: radial-gradient(ellipse 65% 35% at 50% 50%, rgba(255,61,2,0.09) 0%, transparent 65%);
+  animation: midZoneBreath 14s ease-in-out infinite;
 }
 
 .mid-zone .process,
@@ -1089,12 +1262,72 @@
   border-top: none;
 }
 
+/* Per-section ambient glow — Process 02 */
+@keyframes sectionPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+.mid-zone .process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 90% 10%, rgba(255,61,2,0.12) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 50% at 10% 90%, rgba(255,61,2,0.09) 0%, transparent 52%);
+  animation: sectionPulse 16s ease-in-out infinite 1s;
+}
+
+/* Per-section ambient glow — Sound Familiar */
+.mid-zone .pain-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,61,2,0.10) 0%, transparent 60%);
+  animation: sectionPulse 12s ease-in-out infinite 2s;
+}
+
+/* Per-section ambient glow — Results 03 */
+.mid-zone .cases::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 55% at 88% 15%, rgba(255,61,2,0.16) 0%, transparent 58%),
+    radial-gradient(ellipse 50% 45% at 12% 82%, rgba(255,61,2,0.11) 0%, transparent 52%);
+  animation: sectionPulse 14s ease-in-out infinite;
+}
+
+.mid-zone .cases > * { position: relative; z-index: 1; }
+
+/* Per-section ambient glow — Clients 04 */
+.mid-zone .test::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 30%, rgba(255,61,2,0.14) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 55% at 85% 80%, rgba(255,61,2,0.10) 0%, transparent 52%);
+  animation: sectionPulse 18s ease-in-out infinite 4s;
+}
+
+.mid-zone .test > * { position: relative; z-index: 1; }
+
 /* ==========================================================================
    Pricing
    ========================================================================== */
 
 .pricing {
-  padding: 121px 54px;
+  padding: 80px 54px;
   background: var(--mm-warm-white);
 }
 
@@ -1135,13 +1368,15 @@
   border: 1px solid rgba(0,0,0,0.08);
   padding: 54px 36px;
   position: relative;
-  background: var(--mm-warm-white);
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 
 .pcard.feat {
   background: var(--mm-dark);
   color: var(--mm-warm-white);
   border: none;
+  box-shadow: 0 0 48px rgba(255,61,2,0.18), 0 8px 40px rgba(0,0,0,0.22);
 }
 
 .pbadge {
@@ -1245,7 +1480,7 @@
    ========================================================================== */
 
 .faq {
-  padding: 121px 54px;
+  padding: 80px 54px;
   background: var(--mm-warm-white);
   border-top: 1px solid rgba(0,0,0,0.06);
 }
@@ -1322,7 +1557,7 @@
    ========================================================================== */
 
 .cta-final {
-  padding: 121px 54px;
+  padding: 80px 54px;
   background: var(--mm-orange);
   text-align: center;
   position: relative;
@@ -1774,7 +2009,7 @@
 .page-hero .section-label { color: var(--mm-orange-t2); margin-left: auto; margin-right: auto; }
 .page-hero h1 { max-width: 800px; margin: 0 auto 16px; }
 .page-hero h2 { max-width: 700px; margin: 0 auto 16px; }
-.page-hero p { max-width: 640px; font-size: 18px; opacity: 0.75; margin: 0 auto var(--sp-lg); }
+.page-hero p { max-width: 640px; font-size: 18px; color: #fff; opacity: 1; margin: 0 auto var(--sp-lg); }
 .page-hero .btn { display: inline-block; }
 
 .cta-strip {
@@ -1873,16 +2108,35 @@
   .tick:nth-child(2)::after { display: none; }
   .tick-num { font-size: 36px; }
 
-  .services, .process, .cases, .test, .pricing, .faq, .cta-final { padding: 81px 24px; }
+  .services, .process, .cases, .test, .pricing, .faq, .cta-final { padding: 56px 24px; }
   .svc-grid { grid-template-columns: 1fr; }
   .svc { margin-bottom: 0; }
   .steps { grid-template-columns: 1fr; gap: 20px; }
   .step-s1, .step-s2, .step-s3, .step-s4 { margin-top: 0; }
   .cases-grid { grid-template-columns: 1fr; }
-  /* Mobile carousel: 1 card at a time */
+  /* Mobile carousel: 1 card at a time, arrows overlaid on top of card */
   .cases-carousel-track .case { flex: 0 0 100%; }
   .cases-carousel-track { gap: 0; }
-  .cases-carousel-outer { gap: 10px; }
+  .cases-carousel-outer {
+    position: relative;
+    gap: 0;
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 38%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+  }
+  .carousel-prev { left: 10px; }
+  .carousel-next { right: 10px; }
+
+  /* Clients · 04 testimonial — smaller font, tighter side padding */
+  .test { padding: 48px 20px; }
+  .testimonial-card { padding: var(--sp-lg) var(--sp-md); }
+  .test blockquote { font-size: 24px; line-height: 108%; margin-bottom: 24px; }
+
   .price-cards { grid-template-columns: 1fr; }
 
   .services-hdr h2, .process-hdr h2, .cases-hdr h2, .pricing-hdr h2, .faq h2 { font-size: 36px; }
@@ -1904,52 +2158,139 @@
 }
 
 /* ==========================================================================
-   Stats ticker — Guy review
+   Stats ticker — seamless marquee (4 groups, translateX(-25%) = 1 group)
    ========================================================================== */
 .stats-ticker {
   overflow: hidden;
   background: #fff;
-  padding: 10px 0;
+  padding: 9px 0;
   border-bottom: 1px solid #e8e8e6;
 }
 .ticker-track {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  white-space: nowrap;
-  animation: ticker 22s linear infinite;
+  will-change: transform;
+  animation: marquee 24s linear infinite;
 }
-.ticker-track span {
+.ticker-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px; /* matches gap so cross-group spacing = within-group spacing */
+  flex-shrink: 0;
+}
+.ticker-group span {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--mm-dark);
+  white-space: nowrap;
 }
-.ticker-dot {
+.ticker-sep {
   color: var(--mm-orange) !important;
-  font-weight: 700;
+  font-size: 9px !important;
+  flex-shrink: 0;
 }
-@keyframes ticker {
+@keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-25%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation-play-state: paused; }
 }
 
 /* ===================================================================
 
+End of file */ 
+
+
 /* ==========================================================================
-   Team section
+   Road Journey System + Scroll Car
+   Canvas-based progressive road + path-following car.
+   Only active on viewports ≥ 1440 px where gutters exist.
    ========================================================================== */
-.team-section { background: #f5f5f5; padding: 80px 54px; }
-.team-section .container { max-width: 760px; margin: 0 auto; }
-.team-member { display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
-.team-photo { width: 200px; height: 200px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-.team-member-details { flex: 1; min-width: 260px; }
-.team-member-details h3 { font-family: var(--font-display, 'TT Commons Pro','TT Commons','Helvetica Neue',Arial,sans-serif); font-weight: 700; font-size: 22px; margin-bottom: 8px; color: #1c1c1e; }
-.team-role { font-weight: 700; color: #FF3D02; margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
-.team-member-details p { line-height: 1.6; margin-bottom: 12px; color: #1c1c1e; }
-@media (max-width: 640px) {
-  .team-section { padding: 60px 24px; }
-  .team-photo { width: 160px; height: 160px; }
+
+/* Fixed canvas: the purple roadmap layer */
+#road-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scroll car: positioned via JS transform */
+#sc-car {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.65s ease;
+  will-change: transform;
+}
+#sc-car.sc-visible { opacity: 1; }
+
+/* SVG car — glow filter, rotation around visual centre */
+#sc-car-svg {
+  width: 100px;
+  height: auto;
+  display: block;
+  transform-origin: 50% 50%;
+  filter:
+    drop-shadow(0 4px 24px rgba(255,61,2,0.20))
+    drop-shadow(0 0 48px rgba(255,61,2,0.09));
+}
+
+/* Hide on narrow viewports */
+@media (max-width: 1439px) {
+  #road-canvas,
+  #sc-car { display: none !important; }
+}
+
+/* ==========================================================================
+   Trust logos — full-width spread
+   ========================================================================== */
+
+/* Override the max-width — spread logos across the full container */
+.trust-logos-static {
+  justify-content: space-between;
+  max-width: none;
+  width: 100%;
+  gap: 24px 0;
+}
+
+@media (max-width: 900px) {
+  .trust-logos-static { justify-content: center; gap: 24px 40px; }
+}
+
+/* ==========================================================================
+   Case study achievement badges
+   ========================================================================== */
+
+.case-img { position: relative; }
+
+.case-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--mm-orange);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 5px 11px;
+  border-radius: 20px;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(255, 61, 2, 0.35);
+  z-index: 2;
 }
