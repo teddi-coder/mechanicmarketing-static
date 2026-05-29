@@ -1326,7 +1326,7 @@ a.blog-card:hover {
 }
 
 /* ==========================================================================
-   Nav — Centered layout (logo left | links centre | toggle right)
+   Nav — Centered layout (logo left | links centre | CTA+toggle right)
    Overrides the inline display:flex;justify-content:space-between on .mm-nav
    ========================================================================== */
 
@@ -1344,8 +1344,32 @@ a.blog-card:hover {
   justify-self: center;
 }
 
-.mm-nav .mm-nav-toggle {
+/* Right column: CTA button + mobile toggle live together here */
+.mm-nav .mm-nav-right {
   justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* "Get in Touch" CTA hover — matches .btn-o:hover on the rest of the site */
+.mm-nav-cta {
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.mm-nav-cta:hover {
+  background: #FF6746 !important;
+  box-shadow: 0 6px 20px rgba(255, 61, 2, 0.4);
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+/* On mobile: shrink CTA padding so logo + CTA + toggle all fit */
+@media (max-width: 768px) {
+  .mm-nav-cta {
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+  }
 }
 
 /* ==========================================================================
