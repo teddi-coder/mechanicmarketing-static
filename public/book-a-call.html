@@ -70,7 +70,10 @@
             font-size: 16px;
             line-height: 1.6;
             color: var(--near-black);
-            background: var(--warm-white);
+            background:
+                radial-gradient(ellipse 80% 55% at 100% 0%, rgba(255,61,2,0.065) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 40% at 0% 100%, rgba(255,61,2,0.04) 0%, transparent 60%),
+                var(--warm-white);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
@@ -1331,6 +1334,40 @@
         .section-heading-center h2 {
             margin-top: 0;
         }
+
+        /* === LP Case Studies Carousel === */
+        .lp-cases-section { padding: 80px 24px; background: radial-gradient(ellipse 75% 65% at 100% 0%, rgba(255,61,2,0.055) 0%, transparent 70%), radial-gradient(ellipse 45% 50% at 0% 100%, rgba(255,61,2,0.035) 0%, transparent 60%), #ffffff; border-top: 1px solid rgba(0,0,0,0.06); }
+        .lp-cases-hdr { margin-bottom: 36px; text-align: center; }
+        .lp-cases-hdr h2 { font-size: clamp(36px, 5vw, 54px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 89%; color: #FF3D02; margin-bottom: 16px; }
+        .lp-cases-hdr p { font-size: 16px; line-height: 1.5; color: rgba(28,28,26,0.65); margin: 0; }
+        .lp-cases-carousel-outer { display: flex; align-items: center; gap: 20px; max-width: 1160px; margin: 0 auto; }
+        .lp-cases-carousel-viewport { flex: 1; overflow: hidden; }
+        .lp-cases-carousel-track { display: flex; gap: 36px; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); will-change: transform; }
+        .lp-cases-carousel-track .lp-case { flex: 0 0 calc(50% - 18px); border-radius: 12px; overflow: hidden; box-shadow: 0 6px 32px rgba(0,0,0,0.25); background: #1c1c1a; text-decoration: none; display: block; transition: transform 0.25s, box-shadow 0.25s; }
+        .lp-cases-carousel-track .lp-case:hover { transform: translateY(-4px); }
+        .lp-case-img { height: 220px; overflow: hidden; position: relative; }
+        .lp-case-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .lp-cases-carousel-track .lp-case:hover .lp-case-img img { transform: scale(1.04); }
+        .lp-case-body { padding: 36px; }
+        .lp-case-body h3 { font-size: 24px; font-weight: 700; text-transform: uppercase; line-height: 100%; color: #F0F0EC; margin-bottom: 11px; margin-top: 0; }
+        .lp-case-body p { font-size: 16px; line-height: 1.5; color: rgba(240,240,236,0.55); margin-bottom: 24px; }
+        .lp-case-lnk { font-size: 16px; font-weight: 700; text-transform: uppercase; color: #FF3D02; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+        .lp-cases-carousel-track .lp-case:hover .lp-case-lnk { gap: 12px; }
+        .lp-case-lnk svg { width: 16px; height: 16px; }
+        .lp-case-badge { position: absolute; top: 14px; left: 14px; background: #FF3D02; color: #fff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; padding: 5px 11px; border-radius: 20px; line-height: 1; white-space: nowrap; box-shadow: 0 2px 10px rgba(255,61,2,0.35); z-index: 2; }
+        .lp-carousel-btn { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; border: 2px solid #1c1c1a; background: #1c1c1a; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease; box-sizing: border-box; padding: 0; }
+        .lp-carousel-btn svg { width: 22px; height: 22px; }
+        .lp-carousel-btn:hover { background: #333; transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .lp-carousel-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; box-shadow: none; }
+        @media (max-width: 768px) {
+            .lp-cases-section { padding: 56px 20px; }
+            .lp-cases-carousel-track .lp-case { flex: 0 0 100%; }
+            .lp-cases-carousel-track { gap: 0; }
+            .lp-cases-carousel-outer { position: relative; gap: 0; }
+            .lp-carousel-btn { position: absolute; top: 38%; transform: translateY(-50%); z-index: 10; width: 40px; height: 40px; }
+            .lp-carousel-prev { left: 10px; }
+            .lp-carousel-next { right: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -1623,6 +1660,79 @@
                 <a href="#book" class="btn btn-secondary">Book My Free Audit</a>
             </div>
         </div>
+    </section>
+
+    <!-- CASE STUDIES CAROUSEL -->
+    <section class="lp-cases-section">
+        <div class="lp-cases-hdr">
+            <span class="section-label">Case Studies</span>
+            <h2>Real results for real workshops</h2>
+            <p>Don&#8217;t take our word for it. See what we&#8217;ve done for shops like yours.</p>
+        </div>
+        <div class="lp-cases-carousel-outer" id="lp-carousel">
+            <button class="lp-carousel-btn lp-carousel-prev" aria-label="Previous case study" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="lp-cases-carousel-viewport">
+                <div class="lp-cases-carousel-track">
+                    <a href="/case-studies/core-diesel" class="lp-case" target="_blank" rel="noopener noreferrer">
+                        <div class="lp-case-img"><img src="/images/f6cd20a907dcb87fbfe8f30df3ba767c.webp" alt="Core Diesel" loading="lazy"><span class="lp-case-badge">4.45&times; ROAS</span></div>
+                        <div class="lp-case-body"><h3>Core Diesel</h3><p>Built for power and engineered for record leads through a full digital overhaul.</p><span class="lp-case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+                    </a>
+                    <a href="/case-studies/busselton-automotive" class="lp-case" target="_blank" rel="noopener noreferrer">
+                        <div class="lp-case-img"><img src="/images/Team1-min.jpg" alt="Busselton Automotive" loading="lazy"><span class="lp-case-badge">Under $30/Lead</span></div>
+                        <div class="lp-case-body"><h3>Busselton Automotive</h3><p>Driving trust and traction as the go-to shop for GVM and suspension.</p><span class="lp-case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+                    </a>
+                    <a href="/case-studies/bb-garage" class="lp-case" target="_blank" rel="noopener noreferrer">
+                        <div class="lp-case-img"><img src="/images/20250526_BB-Garage_2.jpg" alt="BB Garage" loading="lazy"><span class="lp-case-badge">800% ROAS</span></div>
+                        <div class="lp-case-body"><h3>BB Garage</h3><p>Best month, every month. Dominating diesel performance with smart marketing.</p><span class="lp-case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+                    </a>
+                    <a href="/case-studies/accelerate-automotive" class="lp-case" target="_blank" rel="noopener noreferrer">
+                        <div class="lp-case-img"><img src="/images/accelerate_auto_1770588026_3828291752873363961_4128531570.jpg" alt="Accelerate Automotive" loading="lazy"><span class="lp-case-badge">3,714 Leads</span></div>
+                        <div class="lp-case-body"><h3>Accelerate Automotive</h3><p>Tuning for growth through a digital strategy driving record results.</p><span class="lp-case-lnk">Read case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+                    </a>
+                </div>
+            </div>
+            <button class="lp-carousel-btn lp-carousel-next" aria-label="Next case study">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+        <div style="text-align:center;margin-top:54px;">
+            <a href="#book" class="btn btn-primary">Book My Free Audit</a>
+        </div>
+        <script>
+        (function () {
+            var section = document.getElementById('lp-carousel');
+            if (!section) return;
+            var track = section.querySelector('.lp-cases-carousel-track');
+            if (!track) return;
+            var prev = section.querySelector('.lp-carousel-prev');
+            var next = section.querySelector('.lp-carousel-next');
+            var slides = Array.from(track.querySelectorAll('.lp-case'));
+            var current = 0;
+            function getPerPage() { return window.innerWidth <= 768 ? 1 : 2; }
+            function slideWidth() {
+                var vp = track.parentElement;
+                var pp = getPerPage();
+                if (pp === 1) return vp.offsetWidth;
+                return (vp.offsetWidth - 36) / 2 + 36;
+            }
+            function update(animate) {
+                var pp = getPerPage();
+                var max = slides.length - pp;
+                if (current > max) current = max;
+                if (animate === false) { track.style.transition = 'none'; } else { track.style.transition = ''; }
+                track.style.transform = 'translateX(-' + (current * slideWidth()) + 'px)';
+                if (prev) prev.disabled = current <= 0;
+                if (next) next.disabled = current >= max;
+            }
+            if (prev) prev.addEventListener('click', function () { if (current > 0) { current--; update(); } });
+            if (next) next.addEventListener('click', function () { var max = slides.length - getPerPage(); if (current < max) { current++; update(); } });
+            update(false);
+            window.addEventListener('resize', function () { update(false); });
+            requestAnimationFrame(function () { requestAnimationFrame(function () { track.style.transition = ''; }); });
+        })();
+        </script>
     </section>
 
     <!-- ============================================
